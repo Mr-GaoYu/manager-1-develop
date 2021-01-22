@@ -10,6 +10,8 @@
     "lint": "yarn run eslint . --quiet --ext .js,.ts,.tsx",
     "install:all": "yarn install --frozen-lockfile"
   },
+  "resolutions": {},
+  "husky": {},
   "workspaces": {
     "packages": [
       "packages/*"
