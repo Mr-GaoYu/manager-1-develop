@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "yarn run eslint . --quiet --ext .js,.ts,.tsx",
+    "cost-of-modules": "yarn global add cost-of-modules && cost-of-modules --less --no-install --include-dev",
     "install:all": "yarn install --frozen-lockfile"
   },
   "resolutions": {},
