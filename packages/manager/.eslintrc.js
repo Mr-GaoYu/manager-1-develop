@@ -157,7 +157,7 @@ module.exports = {
         'array-callback-return': 'off',
         'no-unused-expressions': 'off',
         '@typescript-eslint/no-var-requires': 'off',
-        '@typescript-eslint/no-empty-function': 'warn'
+        '@typescript-eslint/no-empty-function': 'warn',
       },
       env: {
         node: true
@@ -167,7 +167,9 @@ module.exports = {
       files: ['scripts/**', 'config/**', 'cypress/**'],
       rules: {
         'no-console': 'off',
-        'testing-library/await-async-query': 'off'
+        'testing-library/await-async-query': 'off',
+        'no-multiple-empty-lines': 'off',
+        'radix': 'off'
       },
       env: {
         node: true,

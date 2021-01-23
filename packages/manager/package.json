@@ -1,6 +1,6 @@
 {
   "name": "manager",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@babel/core": "7.12.3",
@@ -75,15 +75,22 @@
   },
   "scripts": {
     "postinstall": "patch-package",
+    "lint": "yarn run eslint . --ext .js,.ts,.tsx --quiet",
+    "precommit": "lint-staged && yarn typecheck",
+    "typecheck": "tsc --noEmit",
+    "test": "jest --color",
+    "test:debug": "node --inspect-brk scripts/test.js --runInBand",
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "build": "node scripts/build.js"
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "iOS >= 8",
+      "Firefox >= 20",
+      "Android > 4.2",
+      ">1%",
+      "last 2 versions",
+      "not ie <= 10"
     ],
     "development": [
       "last 1 chrome version",
@@ -92,6 +99,7 @@
     ]
   },
   "jest": {
+    "testResultsProcessor": "jest-sonar-reporter",
     "roots": [
       "<rootDir>/src"
     ],
@@ -103,45 +111,62 @@
       "react-app-polyfill/jsdom"
     ],
     "setupFilesAfterEnv": [
+      "<rootDir>/config/setupTests.js",
       "<rootDir>/src/setupTests.ts"
     ],
     "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+      "<rootDir>/src/**/__tests__/**/*.ts?(x)",
+      "<rootDir>/src/**/?(*.)(spec|test).ts?(x)"
     ],
     "testEnvironment": "jsdom",
-    "testRunner": "D:\\Project\\manager-1-develop-main\\packages\\manager\\node_modules\\jest-circus\\runner.js",
+    "testPathIgnorePatterns": [
+      "<rootDir>/src/components/Storyshots.test.tsx"
+    ],
+    "testRunner": "D:\\Project\\manager-1-develop-main\\node_modules\\jest-circus\\runner.js",
     "transform": {
-      "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.tsx?$": "<rootDir>/config/jest/typescriptTransform.js",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
-      "^.+\\.module\\.(css|sass|scss)$"
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
     ],
-    "modulePaths": [],
     "moduleNameMapper": {
+      "\\.svg$": "<rootDir>/src/components/NullComponent",
       "^react-native$": "react-native-web",
-      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+      "ramda": "ramda/src/index.js",
+      "^src/(.*)": "<rootDir>/src/$1"
     },
     "moduleFileExtensions": [
-      "web.js",
-      "js",
+      "mjs",
       "web.ts",
       "ts",
       "web.tsx",
       "tsx",
-      "json",
+      "web.js",
+      "js",
       "web.jsx",
       "jsx",
+      "json",
       "node"
+    ],
+    "reporters": [
+      "default",
+      "jest-junit"
     ],
     "watchPlugins": [
       "jest-watch-typeahead/filename",
       "jest-watch-typeahead/testname"
     ],
-    "resetMocks": true
+    "resetMocks": true,
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.test.json",
+        "diagnostics": {
+          "warnOnly": true
+        }
+      }
+    }
   },
   "babel": {
     "presets": [
@@ -149,16 +174,30 @@
     ]
   },
   "devDependencies": {
+    "@types/enzyme": "^3.10.8",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-ramda": "^2.5.1",
     "eslint-plugin-scanjs-rules": "^0.2.1",
     "eslint-plugin-sonarjs": "^0.5.0",
-    "eslint-plugin-testing-library": "^3.10.1",
     "eslint-plugin-xss": "^0.1.10",
+    "jest-junit": "^12.0.0",
+    "jest-sonar-reporter": "^2.0.0",
+    "lint-staged": "^10.5.3",
     "patch-package": "^6.2.2",
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.2.1"
+  },
+  "workspaces": {
+    "nohoist": []
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js}": [
+      "prettier --write",
+      "eslint --ext .js,.ts,.tsx --quiet"
+    ]
   }
 }
