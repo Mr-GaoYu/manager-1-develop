@@ -1,0 +1,12 @@
+diff --git a/node_modules/json5/lib/index.js b/node_modules/json5/lib/index.js
+index 3679638..a1bd695 100644
+--- a/node_modules/json5/lib/index.js
++++ b/node_modules/json5/lib/index.js
+@@ -4,6 +4,7 @@ const stringify = require('./stringify')
+ const JSON5 = {
+     parse,
+     stringify,
++    a:'sdad'
+ }
+ 
+ module.exports = JSON5

@@ -74,15 +74,10 @@
     "workbox-webpack-plugin": "5.1.4"
   },
   "scripts": {
+    "postinstall": "patch-package",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -152,5 +147,18 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-cypress": "^2.11.2",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-ramda": "^2.5.1",
+    "eslint-plugin-scanjs-rules": "^0.2.1",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "eslint-plugin-testing-library": "^3.10.1",
+    "eslint-plugin-xss": "^0.1.10",
+    "patch-package": "^6.2.2",
+    "postinstall-postinstall": "^2.1.0",
+    "prettier": "^2.2.1"
   }
 }
