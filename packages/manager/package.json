@@ -201,7 +201,7 @@
   "lint-staged": {
     "*.{ts,tsx,js}": [
       "prettier --write",
-      "eslint --ext .js,.ts,.tsx --quiet"
+      "eslint --ext .js,.ts,.tsx --quiet --fix"
     ]
   }
 }
