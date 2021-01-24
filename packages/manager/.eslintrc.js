@@ -41,9 +41,12 @@ module.exports = {
     'plugin:testing-library/react'
   ],
   rules: {
-    'no-unused-vars': ['warn', {
-      argsIgnorePattern: '^_'
-    }],
+    'no-unused-vars': [
+      'warn',
+      {
+        argsIgnorePattern: '^_'
+      }
+    ],
     'no-unused-expressions': 'warn',
     'no-bitwise': 'error',
     'no-caller': 'error',
@@ -73,6 +76,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     'react/display-name': 'off',
     'react/prop-types': 'off',
     'react/jsx-no-script-url': 'error',
@@ -87,9 +91,9 @@ module.exports = {
     'sonarjs/no-small-switch': 'warn',
     'ramda/prefer-ramda-boolean': 'off',
     'no-multiple-empty-lines': 'error',
-    'curly': 'warn',
+    curly: 'warn',
     'sort-keys': 'off',
-    'comma-dangle': 'warn',
+    'comma-dangle': 'off',
     'no-trailing-spaces': 'warn',
     'no-mixed-requires': 'warn',
     'spaced-comment': 'warn',
@@ -126,7 +130,8 @@ module.exports = {
   env: {
     browser: true
   },
-  overrides: [{
+  overrides: [
+    {
       files: ['*.ts', '*.tsx'],
       rules: {
         'no-unused-vars': 'off',
@@ -157,7 +162,7 @@ module.exports = {
         'array-callback-return': 'off',
         'no-unused-expressions': 'off',
         '@typescript-eslint/no-var-requires': 'off',
-        '@typescript-eslint/no-empty-function': 'warn',
+        '@typescript-eslint/no-empty-function': 'warn'
       },
       env: {
         node: true
@@ -169,7 +174,7 @@ module.exports = {
         'no-console': 'off',
         'testing-library/await-async-query': 'off',
         'no-multiple-empty-lines': 'off',
-        'radix': 'off'
+        radix: 'off'
       },
       env: {
         node: true,
@@ -177,4 +182,4 @@ module.exports = {
       }
     }
   ]
-}
+};

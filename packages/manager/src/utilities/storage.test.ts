@@ -18,5 +18,5 @@ describe('isDevToolsEnvValid', () => {
         label: 'string-d'
       })
     ).toBe(false);
-  })
-})
+  });
+});

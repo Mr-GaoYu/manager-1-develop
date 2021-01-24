@@ -22,16 +22,12 @@ const DevTools: React.FC<Record<string, never>> = () => {
         )}
       </Grid>
     </div>
-  )
-}
+  );
+};
 
 export const install = () => {
   (window as any).devToolsEnabled = true;
   const devToolsRoot = document.createElement('div');
   document.body.appendChild(devToolsRoot);
-  ReactDOM.render(
-    <DevTools />,
-    devToolsRoot
-  );
-}
-
+  ReactDOM.render(<DevTools />, devToolsRoot);
+};

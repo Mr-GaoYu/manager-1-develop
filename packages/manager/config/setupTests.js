@@ -5,7 +5,7 @@ require('@testing-library/jest-dom/extend-expect');
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const localStorageMock = (function() {
+const localStorageMock = (function () {
   let store = {};
   return {
     clear() {

@@ -1,19 +1,16 @@
 const loadDevTools = (callback: () => any) => {
-
   if (devToolsEnabled()) {
     import('./dev-tools')
-      .then(devTools => devTools.install())
+      .then((devTools) => devTools.install())
       .finally(callback);
   } else {
-    callback()
+    callback();
   }
-
-}
+};
 
 export default loadDevTools;
 
 export const devToolsEnabled = () => {
-
   const explicitlyDisabled =
     window.location.search.includes('dev-tools=false') ||
     window.localStorage.getItem('dev-tools') === 'false';
@@ -26,4 +23,4 @@ export const devToolsEnabled = () => {
     !explicitlyDisabled &&
     (process.env.NODE_ENV === 'development' || explicitlyEnabled)
   );
-}
+};

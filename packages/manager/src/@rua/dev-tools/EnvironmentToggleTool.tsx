@@ -9,10 +9,9 @@ export interface EnvironmentOption {
   clientID: string;
 }
 
-
 /**
  * REACT_APP_DEV_TOOLS_ENV_1_LABEL = "Another environment"
- * @param env 
+ * @param env
  */
 export const getOptions = (env: typeof process.env) => {
   const envVariables = Object.keys(env);
@@ -35,12 +34,12 @@ export const getOptions = (env: typeof process.env) => {
         clientID: env[`${base}_CLIENT_ID`] ?? ''
       }
     ];
-  }, [])
-}
+  }, []);
+};
 
 const options = getOptions(process.env);
 
-const EnvironmentToggleTool: React.FC<Record<string, never>> = props => {
+const EnvironmentToggleTool: React.FC<Record<string, never>> = () => {
   const [selectedOption, setSelectedOption] = React.useState(0);
 
   const localStorageEnv = storage.devToolsEnv.get();
@@ -53,17 +52,16 @@ const EnvironmentToggleTool: React.FC<Record<string, never>> = props => {
       </Grid>
       <Grid item xs={12}>
         <select
-          onBlur={e => {
+          onBlur={(e) => {
             const selectedIndex = options.findIndex(
-              o => o.label === e.target.value
+              (o) => o.label === e.target.value
             );
             setSelectedOption(Math.max(selectedIndex, 0));
           }}
           defaultValue={currentEnvLabel}
           style={{ marginRight: 8 }}
-          placeholder="Select an environment"
-        >
-          {options.map(thisOption => {
+          placeholder="Select an environment">
+          {options.map((thisOption) => {
             const { label } = thisOption;
             return (
               <option key={label} value={label}>
@@ -79,13 +77,12 @@ const EnvironmentToggleTool: React.FC<Record<string, never>> = props => {
               storage.devToolsEnv.set(selected);
               window.location.reload();
             }
-          }}
-        >
+          }}>
           Refresh
         </button>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default React.memo(EnvironmentToggleTool)
+export default React.memo(EnvironmentToggleTool);

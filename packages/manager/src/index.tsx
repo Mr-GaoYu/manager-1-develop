@@ -10,4 +10,4 @@ loadDevTools(() => {
     </React.StrictMode>,
     document.getElementById('root') as HTMLElement
   );
-})
+});
