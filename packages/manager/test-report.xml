@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
-  <file path="D:\Project\manager-1-develop-main\packages\manager\src\App.test.tsx">
-  </file>
-  <file path="D:\Project\manager-1-develop-main\packages\manager\src\components\Storyshots.test.tsx">
-  </file>
   <file path="D:\Project\manager-1-develop-main\packages\manager\src\sum.test.ts">
+    <testCase name="adds 1 + 2 to equal 3" duration="3"/>
+  </file>
+  <file path="D:\Project\manager-1-develop-main\packages\manager\src\utilities\storage.test.ts">
+    <testCase name="isDevToolsEnvValid returns `true` if all properties are strings" duration="2"/>
   </file>
 </testExecutions>

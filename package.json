@@ -2,14 +2,16 @@
   "name": "root",
   "private": true,
   "version": "0.0.0",
-  "main": "index.js",
   "repository": "https://github.com/Mr-GaoYu/manager-1-develop.git",
   "author": "Mr_GaoYu <Mr_GaoYu@163.com>",
   "license": "MIT",
   "scripts": {
     "lint": "yarn run eslint . --quiet --ext .js,.ts,.tsx",
     "cost-of-modules": "yarn global add cost-of-modules && cost-of-modules --less --no-install --include-dev",
-    "install:all": "yarn install --frozen-lockfile"
+    "install:all": "yarn install --frozen-lockfile",
+    "clean": "rimraf node_modules && rimraf packages/@rua/api-v1/node_modules && rimraf packages/manager/node_modules",
+    "start:all": "concurrently \"yarn workspace @rua/api-v1 start\" \"yarn workspace rua-manager start\"",
+    "test": "yarn workspace rua-manager test --maxWorkers=4"
   },
   "resolutions": {},
   "husky": {},

@@ -60,7 +60,7 @@ module.exports = {
       '@material-ui/core',
       '@material-ui/icons'
     ],
-    'no-console': 'error',
+    'no-console': 'off',
     'no-undef-init': 'off',
     radix: 'error',
     '@typescript-eslint/no-unused-vars': 'off',

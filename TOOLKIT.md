@@ -66,3 +66,14 @@
   #### 部署
 
       * 在 package.json 的 scripts 中加入 "postinstall": "patch-package"，后续执行 npm install 或 yarn install 命令时，会自动为依赖包打补丁了
+
+
+
+
+### yarn global add rimraf || npm install rimraf -g
+
+- 以包的形式包装rm -rf命令，就是用来删除文件和文件夹的，不管文件夹是否为空，都可以删除。
+
+  ```js
+  "clean": "rimraf build/static"
+  ```
