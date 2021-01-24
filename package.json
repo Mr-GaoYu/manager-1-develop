@@ -14,10 +14,19 @@
     "test": "yarn workspace rua-manager test --maxWorkers=4"
   },
   "resolutions": {},
-  "husky": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn workspaces run precommit"
+    }
+  },
   "workspaces": {
     "packages": [
       "packages/*"
     ]
+  },
+  "devDependencies": {
+    "husky": "^4.3.8",
+    "postinstall": "^0.7.0",
+    "typescript": "^4.1.3"
   }
 }
