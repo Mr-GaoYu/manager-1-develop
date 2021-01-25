@@ -19,7 +19,7 @@ export const setToken = (token: string) => {
       ...config,
       headers: {
         ...config.headers,
-        Authorization: `Bearer ${token}`
+        Authorization:                                               `Bearer ${token}`
       }
     };
   });
@@ -41,4 +41,4 @@ export const setURL = (url: string) => set('url', url);
 
 export const setMethod = (method: MethodField) => set('method', method);
 
-export const setParams = (params:any = {}) => set('params',params);
+export const setParams = (params: any = {}) => set('params', params);
