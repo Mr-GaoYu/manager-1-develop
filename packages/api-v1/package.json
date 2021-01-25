@@ -23,7 +23,7 @@
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --no-cache --no-watchman",
     "lint": "yarn run eslint . --quiet --ext .js,.ts,.tsx",
     "typecheck": "tsc --noEmit true --emitDeclarationOnly false",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged && yarn typecheck"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
