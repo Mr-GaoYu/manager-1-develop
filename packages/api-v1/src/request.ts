@@ -36,3 +36,9 @@ export const isEmpty = (v: any) =>
   (typeof v === 'object' &&
     Object.keys(v).length === 0 &&
     v.constructor === Object);
+
+export const setURL = (url: string) => set('url', url);
+
+export const setMethod = (method: MethodField) => set('method', method);
+
+export const setParams = (params:any = {}) => set('params',params);
