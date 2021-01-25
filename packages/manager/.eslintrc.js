@@ -98,7 +98,12 @@ module.exports = {
     'no-mixed-requires': 'warn',
     'spaced-comment': 'warn',
     'object-shorthand': 'warn',
-    'prettier/prettier': 'warn',
+    'prettier/prettier': [
+      'warn',
+      {
+        endOfLine: 'lf'
+      }
+    ],
     'scanjs-rules/assign_to_hostname': 'warn',
     'scanjs-rules/assign_to_href': 'warn',
     'scanjs-rules/assign_to_location': 'warn',
