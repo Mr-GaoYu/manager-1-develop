@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Grid from 'src/components/core/Grid';
-import { isProductionBuild } from 'src/@rua/website/constants';
+import { isProductionBuild } from 'src/website/constants';
 import EnvironmentToggleTool from './EnvironmentToggleTool';
 import MockDataTool from './MockDataTool';
 
