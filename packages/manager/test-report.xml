@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
-  <file path="D:\Project\manager-1-develop-main\packages\manager\src\sum.test.ts">
-    <testCase name="adds 1 + 2 to equal 3" duration="2"/>
-  </file>
-  <file path="D:\Project\manager-1-develop-main\packages\manager\src\utilities\storage.test.ts">
+  <file path="C:\Users\dell\Desktop\manager-1-develop-main\packages\manager\src\utilities\storage.test.ts">
     <testCase name="isDevToolsEnvValid returns `true` if all properties are strings" duration="2"/>
+  </file>
+  <file path="C:\Users\dell\Desktop\manager-1-develop-main\packages\manager\src\dev-tools\load.test.ts">
+    <testCase name="devToolsEnabled it defaults to FALSE in production builds, but can be enabled" duration="11"/>
+    <testCase name="devToolsEnabled it defaults to TRUE in development mode, but can be disabled" duration="2"/>
   </file>
 </testExecutions>

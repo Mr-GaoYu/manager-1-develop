@@ -4,6 +4,7 @@ import Grid from 'src/components/core/Grid';
 import { isProductionBuild } from 'src/website/constants';
 import EnvironmentToggleTool from './EnvironmentToggleTool';
 import MockDataTool from './MockDataTool';
+import './dev-tools.css';
 
 const DevTools: React.FC<Record<string, never>> = () => {
   return (

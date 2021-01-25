@@ -124,7 +124,6 @@
       "<rootDir>/build/",
       "<rootDir>/node_modules/"
     ],
-    "testRunner": "D:\\Project\\manager-1-develop-main\\node_modules\\jest-circus\\runner.js",
     "transform": {
       "^.+\\.tsx?$": "<rootDir>/config/jest/typescriptTransform.js",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
