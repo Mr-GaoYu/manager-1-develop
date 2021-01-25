@@ -1,3 +1,3 @@
-### HMR，ts的类型检测module是NodeMoudle类型，且其中没有.hot属性
+### HMR，ts 的类型检测 module 是 NodeMoudle 类型，且其中没有.hot 属性
 
-  - npm install @types/webpack-env -D
+- npm install @types/webpack-env -D

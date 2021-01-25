@@ -1,24 +1,24 @@
 ### yarn 配置详情和命令详解
 
-- yarn -v	
+- yarn -v
 
-  查看yarn版本
+  查看 yarn 版本
 
 - yarn config list
 
-  查看yarn配置
+  查看 yarn 配置
 
 - yarn config set registry https://registry.npm.taobao.org/
 
-  修改yarn的源镜像为淘宝源
+  修改 yarn 的源镜像为淘宝源
 
 - yarn config set global-folder "D:\nodejs\node_global"
 
-  修改全局安装目录的bin目录位置, bin目录需要自己创建, 而且需要把此目录加到系统环境变量(D:\nodejs\node_global\bin)
+  修改全局安装目录的 bin 目录位置, bin 目录需要自己创建, 而且需要把此目录加到系统环境变量(D:\nodejs\node_global\bin)
 
 - yarn config set cache-folder "D:\nodejs\node_cache"
 
-  修改全局缓存目录, 先创建好目录(cache), 和global放在同一层目录下
+  修改全局缓存目录, 先创建好目录(cache), 和 global 放在同一层目录下
 
 - yarn config list
 
@@ -26,11 +26,11 @@
 
 - yarn global bin
 
-  查看当前yarn的bin的位置
+  查看当前 yarn 的 bin 的位置
 
 - yarn global dir
 
-  查看当前yarn的全局安装位置 
+  查看当前 yarn 的全局安装位置
 
 - yarn install
 

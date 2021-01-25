@@ -45,7 +45,8 @@
     ]
   }
   ```
-  对于匹配  overrides.files  且不匹配  overrides.excludedFiles  的 文件， overrides.rules  中的规则会覆盖 rules  中的同名规则
+
+  对于匹配 overrides.files 且不匹配 overrides.excludedFiles 的 文件， overrides.rules 中的规则会覆盖 rules 中的同名规则
 
 ```js
   "no-alert": 0,//禁止使用alert confirm prompt

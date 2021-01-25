@@ -40,7 +40,7 @@
   #### 嵌套模块
 
       * 支持修改依赖包的依赖包，比如 node_modules/package/node_modules/another-package，通过 / 分隔
-      
+
         ```js
         npx patch-package package/another-package
 
@@ -56,9 +56,9 @@
 
       * 不带参数执行 npx patch-package 或者 yarn patch-package 应用所有补丁
 
-      * options 
+      * options
 
-        --reverse 撤回所有补丁  
+        --reverse 撤回所有补丁
         Note: 如果打补丁后，补丁文件被修改过，此操作将失败，此时可以重新安装 node_modules
 
         --patch-dir 指定补丁文件所在目录
@@ -67,12 +67,9 @@
 
       * 在 package.json 的 scripts 中加入 "postinstall": "patch-package"，后续执行 npm install 或 yarn install 命令时，会自动为依赖包打补丁了
 
-
-
-
 ### yarn global add rimraf || npm install rimraf -g
 
-- 以包的形式包装rm -rf命令，就是用来删除文件和文件夹的，不管文件夹是否为空，都可以删除。
+- 以包的形式包装 rm -rf 命令，就是用来删除文件和文件夹的，不管文件夹是否为空，都可以删除。
 
   ```js
   "clean": "rimraf build/static"
