@@ -1,9 +1,8 @@
-# production
 dist
 build
 lib
-**/api-v4/index.js
-**/api-v4/index.d.ts
+**/api-v1/index.js
+**/api-v1/index.d.ts
 
 # editor configuration
 .vscode
@@ -112,3 +111,4 @@ dist
 
 # TernJS port file
 .tern-port
+.gitignore
