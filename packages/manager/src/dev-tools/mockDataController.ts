@@ -14,6 +14,7 @@ export interface MockData {
 }
 
 export type SubscribeFunction = (mockData: MockData) => void;
+
 export class MockDataController {
   subscribers: Record<string, SubscribeFunction>;
   mockData: MockData;

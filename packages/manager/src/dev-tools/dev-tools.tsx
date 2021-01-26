@@ -29,7 +29,7 @@ const DevTools: React.FC<Record<string, never>> = () => {
 };
 
 export const install = () => {
-  (window as any).devToolsEnabled = true;
+  (window as Window).devToolsEnabled = true;
   const devToolsRoot = document.createElement('div');
   document.body.appendChild(devToolsRoot);
   ReactDOM.render(
