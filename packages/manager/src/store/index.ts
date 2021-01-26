@@ -16,6 +16,7 @@ export const defaultState: ApplicationState = {
 };
 
 /**
+ *
  * Reducers
  */
 const __resources = combineReducers({});
