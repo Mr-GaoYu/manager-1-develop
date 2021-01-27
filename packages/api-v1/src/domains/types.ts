@@ -8,3 +8,13 @@ export interface Domain {
   expire_sec: number;
   ttl_sec: number;
 }
+
+export type DomainType = 'master' | 'slave';
+
+export interface CreateDomainPayload {
+  domain: string;
+  type: DomainType;
+  master_ips?: string[];
+  soa_email?: string;
+  tags?: string[];
+}
