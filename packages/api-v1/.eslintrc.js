@@ -13,7 +13,12 @@ module.exports = {
     'plugin:prettier/recommended'
   ],
   rules: {
-    'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    'no-unused-vars': [
+      'warn',
+      {
+        argsIgnorePattern: '^_'
+      }
+    ],
     'no-unused-expressions': 'warn',
     'no-bitwise': 'error',
     'no-caller': 'error',
@@ -44,6 +49,7 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/ban-types': 'off',
     'sonarjs/cognitive-complexity': 'warn',
     'sonarjs/no-duplicate-string': 'warn',
     'sonarjs/prefer-immediate-return': 'warn',

@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import store from 'src/store';
 import './dev-tools.css';
 
-const DevTools: React.FC<Record<string, never>> = () => {
+const DevTools: React.FC<{}> = () => {
   return (
     <div id="dev-tools">
       <div>🛠</div>

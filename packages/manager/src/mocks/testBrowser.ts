@@ -27,4 +27,5 @@ const requestEntities = (mockData: MockData, reduxState: ApplicationState) => {
   // if (mockData.domain && !reduxState.__resources.domains.loading) {
   //   store.dispatch(requestDomains() as any);
   // }
+  return mockData && reduxState;
 };

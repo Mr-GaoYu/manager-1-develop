@@ -7,7 +7,7 @@ const options: { label: string; key: keyof MockData }[] = [
   { label: 'Domains', key: 'domain' }
 ];
 
-const MockDataTool: React.FC<Record<string, never>> = () => {
+const MockDataTool: React.FC<{}> = () => {
   const [localMockData, setLocalMockData] = React.useState<MockData>(
     mockDataController.mockData
   );
