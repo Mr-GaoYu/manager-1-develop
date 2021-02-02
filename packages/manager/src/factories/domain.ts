@@ -6,8 +6,15 @@ export const domainFactory = Factory.Sync.makeFactory<Domain>({
   id: Factory.each((id) => id),
   soa_email: 'admin@example.com',
   description: 'a domain',
+  axfr_ips: [],
   ttl_sec: 1000,
+  status: 'active',
+  tags: [],
+  group: '',
+  master_ips: [],
+  type: 'master',
   refresh_sec: 100,
   expire_sec: 100,
-  retry_sec: 100
+  retry_sec: 100,
+  updated: '2020-01-01T13:00:00'
 });
