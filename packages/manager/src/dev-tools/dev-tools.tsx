@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import store from 'src/store';
 import './dev-tools.css';
 
-const DevTools: React.FC<Record<string, never>> = () => {
+const DevTools: React.FC<{}> = () => {
   return (
     <div id="dev-tools">
       <div>🛠</div>
@@ -29,7 +29,7 @@ const DevTools: React.FC<Record<string, never>> = () => {
 };
 
 export const install = () => {
-  (window as any).devToolsEnabled = true;
+  (window as Window).devToolsEnabled = true;
   const devToolsRoot = document.createElement('div');
   document.body.appendChild(devToolsRoot);
   ReactDOM.render(

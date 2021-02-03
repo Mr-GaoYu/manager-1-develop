@@ -39,7 +39,7 @@ export const getOptions = (env: typeof process.env) => {
 
 const options = getOptions(process.env);
 
-const EnvironmentToggleTool: React.FC<Record<string, never>> = () => {
+const EnvironmentToggleTool: React.FC<{}> = () => {
   const [selectedOption, setSelectedOption] = React.useState(0);
 
   const localStorageEnv = storage.devToolsEnv.get();

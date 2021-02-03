@@ -77,6 +77,7 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/ban-types': 'off',
     'react/display-name': 'off',
     'react/prop-types': 'off',
     'react/jsx-no-script-url': 'error',

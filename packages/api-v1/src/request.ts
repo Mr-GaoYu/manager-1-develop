@@ -1,5 +1,6 @@
 import Axios, { AxiosRequestConfig } from 'axios';
 import { APIError } from './types';
+import { ValidationError, ObjectSchema } from 'yup';
 
 export interface RequestConfig extends AxiosRequestConfig {
   validationErrors?: APIError[];
@@ -54,3 +55,71 @@ export const setHeaders = (newHeaders: any = {}) => (object: any) => {
       }
     : object;
 };
+
+export const setData = <T extends {}>(
+  data: T,
+
+  schema?: ObjectSchema<T>,
+
+  postValidationTransform?: (v: any) => any
+) => {
+  if (!schema) {
+    return set('data', data);
+  }
+
+  const updatedData =
+    typeof postValidationTransform === 'function'
+      ? postValidationTransform(data)
+      : data;
+
+  try {
+    schema.validateSync(data, { abortEarly: false });
+    return set('data', updatedData);
+  } catch (error) {
+    return (object: any) => ({
+      ...object,
+      data: updatedData,
+      validationErrors: convertYupToErrors(error)
+    });
+  }
+};
+
+export const convertYupToErrors = (
+  validationError: ValidationError
+): APIError[] => {
+  const { inner } = validationError;
+
+  if (inner && inner.length > 0) {
+    return inner.reduce((result: APIError[], innerValidationError) => {
+      const err = convertYupToErrors(innerValidationError);
+
+      return Array.isArray(err) ? [...result, ...err] : [...result, err];
+    }, []);
+  }
+
+  return [mapYupToAPIError(validationError)];
+};
+
+export const mapYupToAPIError = ({
+  message,
+  path
+}: ValidationError): APIError => ({
+  reason: message,
+  ...(path && { field: path })
+});
+
+const reduceRequestConfig = (...fns: Function[]): RequestConfig =>
+  fns.reduceRight((result, fn) => fn(result), {
+    url: 'https://rua.com/v1',
+    headers: {}
+  });
+
+export const requestGenerator = <T>(...fns: Function[]): Promise<T> => {
+  const config = reduceRequestConfig(...fns);
+  if (config.validationErrors) {
+    return Promise.reject(config.validationErrors);
+  }
+  return baseRequest(config).then((response) => response.data);
+};
+
+export default requestGenerator;
