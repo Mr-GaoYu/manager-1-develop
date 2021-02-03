@@ -200,6 +200,7 @@
     "msw": "^0.25.0",
     "patch-package": "^6.2.2",
     "postinstall-postinstall": "^2.1.0",
+    "prettier": "^2.2.1",
     "ramda": "^0.27.1",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
@@ -213,7 +214,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js}": [
-      "prettier --write",
+      "prettier . --write",
       "eslint --ext .js,.ts,.tsx --quiet --fix"
     ]
   }

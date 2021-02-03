@@ -8,7 +8,9 @@ import {
 import { getDomainPageActions } from './domains.actions';
 import { onStart } from 'src/store/store.helpers.tmp';
 
-export interface State {}
+export interface State {
+  a?: number;
+}
 
 export const initialState: State = {};
 
