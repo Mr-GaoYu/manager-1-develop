@@ -1,18 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { createDomainActions } from 'src/store/domains/domains.actions';
+// import { getDomainPageActions } from 'src/store/domains/domains.actions';
 
 function App() {
   const dispatch = useDispatch();
-  dispatch(
-    createDomainActions({
-      domain: 'assa',
-      type: 'master',
-      master_ips: ['asd'],
-      soa_email: 'assa',
-      tags: ['asd']
-    })
-  );
+  const a = () => (d: any) => console.log(d, 2222);
+  dispatch(a());
+
   return <div className="App"> asdasdas </div>;
 }
 

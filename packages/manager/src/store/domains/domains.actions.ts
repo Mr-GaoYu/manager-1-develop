@@ -38,9 +38,10 @@ export const deleteDomainActions = createAsyncThunk<{}, DomainId>(
   ({ domainId }) => deleteDomain(domainId)
 );
 
-// export const getDomainActions = createAsyncThunk<void, GetAllData<Domain>>(
-//   `${DOMAINS}/get-all`,
-// );
+export const getDomainActions = createAsyncThunk<
+  ResourcePage<Domain>,
+  PageParams
+>(`${DOMAINS}/get-all`, ({ params, filters }) => getDomains(params, filters));
 
 export const getDomainPageActions = createAsyncThunk<
   ResourcePage<Domain>,

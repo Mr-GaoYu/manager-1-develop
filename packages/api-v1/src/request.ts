@@ -11,7 +11,7 @@ export type ConfigField = 'headers' | 'data' | 'params' | 'method' | 'url';
 export type MethodField = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 export const baseRequest = Axios.create({
-  baseURL: 'https://rua.com/v1'
+  baseURL: 'http://localhost:3000'
 });
 
 export const setToken = (token: string) => {
@@ -110,7 +110,7 @@ export const mapYupToAPIError = ({
 
 const reduceRequestConfig = (...fns: Function[]): RequestConfig =>
   fns.reduceRight((result, fn) => fn(result), {
-    url: 'https://rua.com/v1',
+    url: 'http://localhost:3000',
     headers: {}
   });
 
