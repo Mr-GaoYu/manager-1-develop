@@ -40,7 +40,6 @@ export const deleteDomainActions = createAsyncThunk<{}, DomainId>(
 
 // export const getDomainActions = createAsyncThunk<void, GetAllData<Domain>>(
 //   `${DOMAINS}/get-all`,
-
 // );
 
 export const getDomainPageActions = createAsyncThunk<

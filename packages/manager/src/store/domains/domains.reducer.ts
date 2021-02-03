@@ -16,6 +16,7 @@ const reducer: Reducer<State> = createReducer(
   (builder: ActionReducerMapBuilder<State>) =>
     builder
       .addCase(createDomainActions.pending, (state) => {
+        console.log(11111);
         return { ...state, isFetching: true };
       })
       .addCase(createDomainActions.fulfilled, (state, action) => {

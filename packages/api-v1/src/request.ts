@@ -119,6 +119,7 @@ export const requestGenerator = <T>(...fns: Function[]): Promise<T> => {
   if (config.validationErrors) {
     return Promise.reject(config.validationErrors);
   }
+
   return baseRequest(config).then((response) => response.data);
 };
 
