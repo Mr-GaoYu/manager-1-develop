@@ -4,13 +4,12 @@ import { ResourcePage as Page } from 'src/types';
 import { Domain, CreateDomainPayload, UpdateDomainPayload } from './types';
 import { createDomainSchema, updateDomainSchema } from './domains.schema';
 
-export const getDomains = (params?: any) => {
+export const getDomains = (params?: any, filters?: any) =>
   Request<Page<Domain>>(
     setURL(`${API_ROOT}/domains`),
     setMethod('GET'),
     setParams(params)
   );
-};
 
 export const getDomain = (domainId: number) =>
   Request<Domain>(setURL(`${API_ROOT}/domains/${domainId}`), setMethod('GET'));

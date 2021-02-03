@@ -1,42 +1,49 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
+  createDomain,
   CreateDomainPayload,
-  Domain,
-  UpdateDomainPayload
+  deleteDomain,
+  getDomains,
+  updateDomain,
+  UpdateDomainPayload,
+  Domain
 } from '@rua/api-v1/lib/domains';
-import { APIError, ResourcePage } from '@rua/api-v1/lib/types';
-import actionCreatorFactory from 'typescript-fsa';
+import { ResourcePage } from '@rua/api-v1/lib/types';
 
 export interface DomainId {
   domainId: number;
 }
 
-export type UpdateDomainParams = DomainId & UpdateDomainPayload;
-
-const actionCreator = actionCreatorFactory(`@@manager/domains`);
-
-export const deleteDomain = actionCreator<number>('delete');
-
-export const createDomainActions = actionCreator.async<
-  CreateDomainPayload,
-  Domain,
-  APIError[]
->('create');
-export const updateDomainActions = actionCreator.async<
-  UpdateDomainParams,
-  Domain,
-  APIError[]
->('update');
-export const deleteDomainActions = actionCreator.async<
-  DomainId,
-  {},
-  APIError[]
->('delete');
 export interface PageParams {
   params?: any;
   filters?: any;
 }
-export const getDomainsPageActions = actionCreator.async<
-  PageParams,
+
+export type UpdateDomainParams = DomainId & UpdateDomainPayload;
+
+const DOMAINS = `@@manager/domains`;
+
+export const createDomainActions = createAsyncThunk<
+  Domain,
+  CreateDomainPayload
+>(`${DOMAINS}/create`, (payload) => createDomain(payload));
+
+export const updateDomainActions = createAsyncThunk<Domain, UpdateDomainParams>(
+  `${DOMAINS}/update`,
+  ({ domainId, ...payload }) => updateDomain(domainId, payload)
+);
+
+export const deleteDomainActions = createAsyncThunk<{}, DomainId>(
+  `${DOMAINS}/delete`,
+  ({ domainId }) => deleteDomain(domainId)
+);
+
+// export const getDomainActions = createAsyncThunk<void, GetAllData<Domain>>(
+//   `${DOMAINS}/get-all`,
+
+// );
+
+export const getDomainPageActions = createAsyncThunk<
   ResourcePage<Domain>,
-  APIError[]
->('get-page');
+  PageParams
+>(`${DOMAINS}/get-page`, ({ params, filters }) => getDomains(params, filters));

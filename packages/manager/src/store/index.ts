@@ -1,30 +1,32 @@
-import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
+import { combineReducers } from 'redux';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import domains, {
+  State as DomainsState
+} from 'src/store/domains/domains.reducer';
 
-/**
- * Default State
- */
-const __resourcesDefaultState = {};
-
-export interface ResourcesState {}
+export interface ResourcesState {
+  domains: DomainsState;
+}
 
 export interface ApplicationState {
   __resources: ResourcesState;
 }
-
-export const defaultState: ApplicationState = {
-  __resources: __resourcesDefaultState
-};
-
 /**
  *
  * Reducers
  */
-const __resources = combineReducers({});
+const __resources = combineReducers({
+  domains
+});
 
-const reducers = combineReducers<ApplicationState>({
+const rootReducer = combineReducers<ApplicationState>({
   __resources
 });
 
-const enhancers = compose(applyMiddleware());
+const middlewares = [...getDefaultMiddleware<ApplicationState>()];
 
-export default createStore(reducers, defaultState, enhancers);
+export default configureStore({
+  reducer: rootReducer,
+  middleware: middlewares,
+  devTools: process.env.NODE_ENV === 'development'
+});
