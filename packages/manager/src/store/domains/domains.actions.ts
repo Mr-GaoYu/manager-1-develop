@@ -9,6 +9,7 @@ import {
   Domain
 } from '@rua/api-v1/lib/domains';
 import { ResourcePage } from '@rua/api-v1/lib/types';
+import { GetAllData, getAll } from 'src/utilities/getAll';
 
 export interface DomainId {
   domainId: number;
@@ -38,10 +39,10 @@ export const deleteDomainActions = createAsyncThunk<{}, DomainId>(
   ({ domainId }) => deleteDomain(domainId)
 );
 
-export const getDomainActions = createAsyncThunk<
-  ResourcePage<Domain>,
-  PageParams
->(`${DOMAINS}/get-all`, ({ params, filters }) => getDomains(params, filters));
+export const getDomainActions = createAsyncThunk<GetAllData<Domain>, void>(
+  `${DOMAINS}/get-all`,
+  () => getAll<Domain>(getDomains)({}, {})
+);
 
 export const getDomainPageActions = createAsyncThunk<
   ResourcePage<Domain>,

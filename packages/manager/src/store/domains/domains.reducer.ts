@@ -5,7 +5,7 @@ import {
   ActionReducerMapBuilder
 } from '@reduxjs/toolkit';
 // import { Domain } from '@rua/api-v1/lib/domains';
-import { createDomainActions } from './domains.actions';
+import { getDomainActions } from './domains.actions';
 
 export interface State {
   a?: number;
@@ -17,15 +17,16 @@ const reducer: Reducer<State> = createReducer(
   initialState,
   (builder: ActionReducerMapBuilder<State>) =>
     builder
-      .addCase(createDomainActions.pending, (state) => {
+      .addCase(getDomainActions.pending, (state) => {
         console.log(11111);
         return { ...state, isFetching: true };
       })
-      .addCase(createDomainActions.fulfilled, (state) => {
-        console.log(22222);
+      .addCase(getDomainActions.fulfilled, (state) => {
+        console.log(state, 222222222);
         return { ...state, isFetching: true };
       })
-      .addCase(createDomainActions.rejected, (state) => {
+      .addCase(getDomainActions.rejected, (state) => {
+        console.log(33333);
         return { ...state, isFetching: true };
       })
 );

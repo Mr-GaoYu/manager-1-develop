@@ -1,11 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-// import { getDomainPageActions } from 'src/store/domains/domains.actions';
+import { getDomainActions } from 'src/store/domains/domains.actions';
 
 function App() {
   const dispatch = useDispatch();
-  const a = () => (d: any) => console.log(d, 2222);
-  dispatch(a());
+  dispatch(getDomainActions());
 
   return <div className="App"> asdasdas </div>;
 }
