@@ -34,11 +34,11 @@ export type Failure<Params, Error> = (
   error: Error;
 };
 
-export const createRequestThunk = <Req extends any, Res, Err>(
+export const createRequestThunk = <Params extends any, Result, Error>(
   typePrefix: string,
-  request: (params: Req) => Promise<Res>
+  request: (params: Params) => Promise<Result>
 ): any =>
-  createAsyncThunk<Success<Req, Res>, Req>(
+  createAsyncThunk<Success<Params, Result> | Failure<Params, Error>, Params>(
     typePrefix,
     (params, { rejectWithValue }) =>
       request(params)
