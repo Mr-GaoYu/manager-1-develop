@@ -2,7 +2,7 @@ import { array, mixed, number, object, string, AnyObjectSchema } from 'yup';
 
 const domainSchemaBase = object().shape({
   domain: string().matches(
-    /([a-zA-Z0-9-_]+\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|XN--[a-zA-Z0-9]+)/,
+    /^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$/,
     'Domain is not valid.'
   ),
   status: mixed().oneOf(['disabled', 'active', 'edit_mode', 'has_errors']),
@@ -24,7 +24,7 @@ export const createDomainSchema: AnyObjectSchema = domainSchemaBase.shape({
   domain: string()
     .required('Domain is required.')
     .matches(
-      /([a-zA-Z0-9-_]+\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|XN--[a-zA-Z0-9]+)/,
+      /^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$/,
       'Domain is not valid.'
     )
 });

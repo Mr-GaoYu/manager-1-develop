@@ -8,8 +8,9 @@ import {
   UpdateDomainPayload,
   Domain
 } from '@rua/api-v1/lib/domains';
-import { ResourcePage } from '@rua/api-v1/lib/types';
-import { GetAllData, getAll } from 'src/utilities/getAll';
+import { ResourcePage, APIError } from '@rua/api-v1/lib/types';
+import { getAll } from 'src/utilities/getAll';
+import { createRequestThunk } from 'src/store/store.helpers';
 
 export interface DomainId {
   domainId: number;
@@ -24,9 +25,10 @@ export type UpdateDomainParams = DomainId & UpdateDomainPayload;
 
 const DOMAINS = `@@manager/domains`;
 
-export const createDomainActions = createAsyncThunk<
+export const createDomainActions = createRequestThunk<
+  CreateDomainPayload,
   Domain,
-  CreateDomainPayload
+  APIError[]
 >(`${DOMAINS}/create`, (payload) => createDomain(payload));
 
 export const updateDomainActions = createAsyncThunk<Domain, UpdateDomainParams>(
@@ -39,9 +41,19 @@ export const deleteDomainActions = createAsyncThunk<{}, DomainId>(
   ({ domainId }) => deleteDomain(domainId)
 );
 
-export const getDomainActions = createAsyncThunk<GetAllData<Domain>, void>(
+export const getDomainActions = createAsyncThunk<any, void>(
   `${DOMAINS}/get-all`,
-  () => getAll<Domain>(getDomains)({}, {})
+  (_, { rejectWithValue }) => {
+    return getAll<Domain>(getDomains)({}, {})
+      .then((domains) => {
+        console.log('成功');
+        return domains.data;
+      })
+      .catch((err) => {
+        console.log(err, 'err');
+        return rejectWithValue(err);
+      });
+  }
 );
 
 export const getDomainPageActions = createAsyncThunk<

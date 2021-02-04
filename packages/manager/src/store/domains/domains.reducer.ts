@@ -5,7 +5,8 @@ import {
   ActionReducerMapBuilder
 } from '@reduxjs/toolkit';
 // import { Domain } from '@rua/api-v1/lib/domains';
-import { getDomainActions } from './domains.actions';
+import { getDomainActions, createDomainActions } from './domains.actions';
+import { onStart, onError } from 'src/store/store.helpers.tmp';
 
 export interface State {
   a?: number;
@@ -18,16 +19,32 @@ const reducer: Reducer<State> = createReducer(
   (builder: ActionReducerMapBuilder<State>) =>
     builder
       .addCase(getDomainActions.pending, (state) => {
-        console.log(11111);
+        return onStart(state);
+      })
+      .addCase(getDomainActions.fulfilled, (state, actions) => {
+        console.log(actions.payload, 222222222);
         return { ...state, isFetching: true };
       })
-      .addCase(getDomainActions.fulfilled, (state) => {
-        console.log(state, 222222222);
+      .addCase(getDomainActions.rejected, (state, actions) => {
+        console.log(actions.payload, 33333);
         return { ...state, isFetching: true };
       })
-      .addCase(getDomainActions.rejected, (state) => {
-        console.log(33333);
+      .addCase(createDomainActions.pending, (state) => {
+        return onStart(state);
+      })
+      .addCase(createDomainActions.fulfilled, (state, actions) => {
+        console.log(actions, 222222222);
         return { ...state, isFetching: true };
+      })
+      .addCase(createDomainActions.rejected, (state, actions) => {
+        console.log(actions, 333333333);
+        const { error } = actions.payload;
+        return onError(
+          {
+            create: error
+          },
+          state
+        );
       })
 );
 

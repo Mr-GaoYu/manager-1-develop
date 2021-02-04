@@ -1,10 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { getDomainActions } from 'src/store/domains/domains.actions';
+import { createDomainActions } from 'src/store/domains/domains.actions';
 
 function App() {
   const dispatch = useDispatch();
-  dispatch(getDomainActions());
+  dispatch(
+    createDomainActions({
+      domain: '192.168.88.225',
+      type: 'master'
+    })
+  );
 
   return <div className="App"> asdasdas </div>;
 }

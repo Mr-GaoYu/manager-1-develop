@@ -19,6 +19,11 @@ export const handlers = [
   rest.get('*/domains', (req, res, ctx) => {
     const domains = domainFactory.buildList(10);
     return res(ctx.json(makeResourcePage(domains)));
+  }),
+  rest.post('*/domains', (req, res, ctx) => {
+    const payload = req.body as any;
+    const newDomains = domainFactory.build(payload);
+    return res(ctx.json(newDomains));
   })
 ];
 
