@@ -1,5 +1,8 @@
 import { APIError } from '@rua/api-v1/lib/types';
 
+export type APIErrorConfig = {
+  serializedErrorType: APIError[];
+};
 export interface HasStringID {
   id: string;
 }
@@ -16,6 +19,8 @@ export interface EntityError {
   delete?: APIError[];
   update?: APIError[];
 }
+
+export type EntityMap<T> = Record<string, T>;
 
 export interface MappedEntityState<T extends Entity, E = EntityError> {
   error: E;

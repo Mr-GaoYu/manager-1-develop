@@ -8,9 +8,10 @@ import {
   UpdateDomainPayload,
   Domain
 } from '@rua/api-v1/lib/domains';
-import { APIError, ResourcePage } from '@rua/api-v1/lib/types';
+import { ResourcePage } from '@rua/api-v1/lib/types';
 import { getAll } from 'src/utilities/getAll';
 import { createRequestThunk } from 'src/store/store.helpers';
+import { APIErrorConfig } from 'src/store/types';
 
 export interface DomainId {
   domainId: number;
@@ -28,7 +29,7 @@ const DOMAINS = `@@manager/domains`;
 export const createDomainActions = createRequestThunk<
   Domain,
   CreateDomainPayload,
-  APIError[]
+  APIErrorConfig
 >(`${DOMAINS}/create`, (payload) => createDomain(payload));
 
 export const updateDomainActions = createAsyncThunk<Domain, UpdateDomainParams>(

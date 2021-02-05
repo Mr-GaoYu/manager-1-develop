@@ -6,7 +6,12 @@ import {
 } from '@reduxjs/toolkit';
 // import { Domain } from '@rua/api-v1/lib/domains';
 import { getDomainActions, createDomainActions } from './domains.actions';
-import { onStart } from 'src/store/store.helpers.tmp';
+import {
+  onStart,
+  onError
+  // onCreateOrUpdate,
+  // setError
+} from 'src/store/store.helpers.tmp';
 
 export interface State {
   a?: number;
@@ -31,21 +36,20 @@ const reducer: Reducer<State> = createReducer(
       })
       .addCase(createDomainActions.pending, (state, actions) => {
         console.log(actions, 111111);
-        return onStart(state);
+        // return setError({ create: undefined }, state);
       })
       .addCase(createDomainActions.fulfilled, (state, actions) => {
         console.log(actions, 222222222);
-        return { ...state, isFetching: true };
+        // return onCreateOrUpdate(actions.payload,state);
       })
       .addCase(createDomainActions.rejected, (state, actions) => {
-        console.log(actions, 333333333);
-        // const { error } = actions.payload;
-        // return onError(
-        //   {
-        //     create: error
-        //   },
-        //   state
-        // );
+        const { error } = actions;
+        return onError(
+          {
+            create: error
+          },
+          state
+        );
       })
 );
 
