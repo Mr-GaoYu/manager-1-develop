@@ -1,4 +1,3 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   createDomain,
   CreateDomainPayload,
@@ -9,7 +8,7 @@ import {
   Domain
 } from '@rua/api-v1/lib/domains';
 import { ResourcePage } from '@rua/api-v1/lib/types';
-import { getAll } from 'src/utilities/getAll';
+// import { getAll, GetAllData } from 'src/utilities/getAll';
 import { createRequestThunk } from 'src/store/store.helpers';
 import { APIErrorConfig } from 'src/store/types';
 
@@ -46,18 +45,10 @@ export const deleteDomainActions = createRequestThunk<
   APIErrorConfig
 >(`${DOMAINS}/delete`, ({ domainId }) => deleteDomain(domainId));
 
-export const getDomainActions = createAsyncThunk<any, void>(
+export const getDomainActions = createRequestThunk<any, void, APIErrorConfig>(
   `${DOMAINS}/get-all`,
-  (_, { rejectWithValue }) => {
-    return getAll<Domain>(getDomains)({}, {})
-      .then((domains) => {
-        console.log('成功');
-        return domains.data;
-      })
-      .catch((err) => {
-        console.log(err, 'err');
-        return rejectWithValue(err);
-      });
+  () => {
+    return;
   }
 );
 
