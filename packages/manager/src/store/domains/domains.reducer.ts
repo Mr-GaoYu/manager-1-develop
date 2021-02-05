@@ -4,49 +4,86 @@ import {
   Reducer,
   ActionReducerMapBuilder
 } from '@reduxjs/toolkit';
-// import { Domain } from '@rua/api-v1/lib/domains';
-import { getDomainActions, createDomainActions } from './domains.actions';
+import { Domain } from '@rua/api-v1/lib/domains';
 import {
-  onStart,
-  onError
-  // onCreateOrUpdate,
-  // setError
+  getDomainsPageActions,
+  createDomainActions,
+  updateDomainActions,
+  deleteDomainActions
+  // onDeleteSuccess
+} from './domains.actions';
+import {
+  // onStart,
+  onError,
+  onCreateOrUpdate,
+  setError,
+  createDefaultState
 } from 'src/store/store.helpers.tmp';
+import { MappedEntityState, EntityError } from 'src/store/types';
 
-export interface State {
-  a?: number;
-}
+export type State = MappedEntityState<Domain, EntityError>;
 
-export const initialState: State = {};
+export const initialState: State = createDefaultState({}, {});
 
 const reducer: Reducer<State> = createReducer(
   initialState,
   (builder: ActionReducerMapBuilder<State>) =>
     builder
-      .addCase(getDomainActions.pending, (state) => {
-        return onStart(state);
+      .addCase(getDomainsPageActions.pending, (state) => {
+        return setError({ read: undefined }, state);
       })
-      .addCase(getDomainActions.fulfilled, (state, actions) => {
+      .addCase(getDomainsPageActions.fulfilled, (state, actions) => {
         console.log(actions.payload, 222222222);
         return { ...state, isFetching: true };
       })
-      .addCase(getDomainActions.rejected, (state, actions) => {
-        console.log(actions.payload, 33333);
-        return { ...state, isFetching: true };
+      .addCase(getDomainsPageActions.rejected, (state, actions) => {
+        const { error } = actions;
+        return onError({ read: error }, state);
       })
-      .addCase(createDomainActions.pending, (state, actions) => {
-        console.log(actions, 111111);
-        // return setError({ create: undefined }, state);
+      .addCase(createDomainActions.pending, (state) => {
+        return setError({ create: undefined }, state);
       })
       .addCase(createDomainActions.fulfilled, (state, actions) => {
-        console.log(actions, 222222222);
-        // return onCreateOrUpdate(actions.payload,state);
+        const { payload } = actions;
+        return onCreateOrUpdate(payload, state);
       })
       .addCase(createDomainActions.rejected, (state, actions) => {
         const { error } = actions;
         return onError(
           {
             create: error
+          },
+          state
+        );
+      })
+      .addCase(updateDomainActions.pending, (state) => {
+        return setError({ update: undefined }, state);
+      })
+      .addCase(updateDomainActions.fulfilled, (state, actions) => {
+        const { payload } = actions;
+        return onCreateOrUpdate(payload, state);
+      })
+      .addCase(updateDomainActions.rejected, (state, actions) => {
+        const { error } = actions;
+        return onError(
+          {
+            update: error
+          },
+          state
+        );
+      })
+      .addCase(deleteDomainActions.pending, (state) => {
+        return setError({ delete: undefined }, state);
+      })
+      .addCase(deleteDomainActions.fulfilled, () => {
+        // const { payload } = actions;
+        // return onDeleteSuccess(payload.domainId, state);
+      })
+      .addCase(deleteDomainActions.rejected, (state, actions) => {
+        const { error } = actions;
+        return onError(
+          {
+            delete: error
           },
           state
         );

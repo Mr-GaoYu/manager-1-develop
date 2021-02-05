@@ -1,5 +1,6 @@
 import { MappedEntityState, Entity, EntityError } from 'src/store/types';
 import { APIError } from '@rua/api-v1/lib/types';
+import { omit } from 'ramda';
 
 export const onStart = <S>(state: S) =>
   Object.assign({}, state, { loading: true, error: { read: undefined } });
@@ -37,3 +38,33 @@ export const addMany = <E extends Entity, O = APIError[] | undefined>(
     results: results ?? Object.keys(itemsById).length
   };
 };
+
+export const onDeleteSuccess = <E extends Entity, O = APIError[] | undefined>(
+  id: string | number,
+  state: MappedEntityState<E, O>
+): MappedEntityState<E, O> => removeMany([String(id)], state);
+
+export const removeMany = <E extends Entity, O = APIError[] | undefined>(
+  list: string[],
+  state: MappedEntityState<E, O>
+): MappedEntityState<E, O> => {
+  const itemsById = omit(list, state.itemsById);
+
+  return {
+    ...state,
+    itemsById,
+    results: Object.keys(itemsById).length
+  };
+};
+
+export const createDefaultState = <E extends Entity, O extends EntityError>(
+  override: Partial<MappedEntityState<E, O>> = {},
+  defaultError: O = {} as O
+): MappedEntityState<E, O> => ({
+  itemsById: {},
+  loading: false,
+  lastUpdated: 0,
+  error: defaultError as O,
+  results: 0,
+  ...override
+});

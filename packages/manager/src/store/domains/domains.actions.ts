@@ -32,15 +32,19 @@ export const createDomainActions = createRequestThunk<
   APIErrorConfig
 >(`${DOMAINS}/create`, (payload) => createDomain(payload));
 
-export const updateDomainActions = createAsyncThunk<Domain, UpdateDomainParams>(
-  `${DOMAINS}/update`,
-  ({ domainId, ...payload }) => updateDomain(domainId, payload)
+export const updateDomainActions = createRequestThunk<
+  Domain,
+  UpdateDomainParams,
+  APIErrorConfig
+>(`${DOMAINS}/update`, ({ domainId, ...payload }) =>
+  updateDomain(domainId, payload)
 );
 
-export const deleteDomainActions = createAsyncThunk<{}, DomainId>(
-  `${DOMAINS}/delete`,
-  ({ domainId }) => deleteDomain(domainId)
-);
+export const deleteDomainActions = createRequestThunk<
+  {},
+  DomainId,
+  APIErrorConfig
+>(`${DOMAINS}/delete`, ({ domainId }) => deleteDomain(domainId));
 
 export const getDomainActions = createAsyncThunk<any, void>(
   `${DOMAINS}/get-all`,
@@ -57,7 +61,8 @@ export const getDomainActions = createAsyncThunk<any, void>(
   }
 );
 
-export const getDomainPageActions = createAsyncThunk<
+export const getDomainsPageActions = createRequestThunk<
   ResourcePage<Domain>,
-  PageParams
+  PageParams,
+  APIErrorConfig
 >(`${DOMAINS}/get-page`, ({ params, filters }) => getDomains(params, filters));
