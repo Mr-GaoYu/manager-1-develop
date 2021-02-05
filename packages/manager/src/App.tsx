@@ -6,7 +6,7 @@ function App() {
   const dispatch = useDispatch();
   dispatch(
     createDomainActions({
-      domain: '192.168.88.225',
+      domain: '192.168.88',
       type: 'master'
     })
   );

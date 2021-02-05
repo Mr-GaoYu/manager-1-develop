@@ -8,7 +8,7 @@ import {
   UpdateDomainPayload,
   Domain
 } from '@rua/api-v1/lib/domains';
-import { ResourcePage, APIError } from '@rua/api-v1/lib/types';
+import { APIError, ResourcePage } from '@rua/api-v1/lib/types';
 import { getAll } from 'src/utilities/getAll';
 import { createRequestThunk } from 'src/store/store.helpers';
 
@@ -26,8 +26,8 @@ export type UpdateDomainParams = DomainId & UpdateDomainPayload;
 const DOMAINS = `@@manager/domains`;
 
 export const createDomainActions = createRequestThunk<
-  CreateDomainPayload,
   Domain,
+  CreateDomainPayload,
   APIError[]
 >(`${DOMAINS}/create`, (payload) => createDomain(payload));
 
