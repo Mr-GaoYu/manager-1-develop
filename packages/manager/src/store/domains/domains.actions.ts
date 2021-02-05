@@ -8,7 +8,7 @@ import {
   Domain
 } from '@rua/api-v1/lib/domains';
 import { ResourcePage } from '@rua/api-v1/lib/types';
-// import { getAll, GetAllData } from 'src/utilities/getAll';
+import { getAll, GetAllData } from 'src/utilities/getAll';
 import { createRequestThunk } from 'src/store/store.helpers';
 import { APIErrorConfig } from 'src/store/types';
 
@@ -45,12 +45,11 @@ export const deleteDomainActions = createRequestThunk<
   APIErrorConfig
 >(`${DOMAINS}/delete`, ({ domainId }) => deleteDomain(domainId));
 
-export const getDomainActions = createRequestThunk<any, void, APIErrorConfig>(
-  `${DOMAINS}/get-all`,
-  () => {
-    return;
-  }
-);
+export const getDomainActions = createRequestThunk<
+  GetAllData<Domain>,
+  void,
+  APIErrorConfig
+>(`${DOMAINS}/get-all`, () => getAll<Domain>(getDomains, undefined)({}, {}));
 
 export const getDomainsPageActions = createRequestThunk<
   ResourcePage<Domain>,
