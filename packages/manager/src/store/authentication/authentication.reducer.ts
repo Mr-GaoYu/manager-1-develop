@@ -57,7 +57,12 @@ const reducer: Reducer<State> = createReducer(
           };
         }
 
-        return;
+        return {
+          ...state,
+          token: null,
+          scopes: null,
+          expiration: null
+        };
       })
 );
 

@@ -1,4 +1,4 @@
-// import { devToolsEnabled } from 'src/@rua/dev-tools/load';
+import { devToolsEnabled } from 'src/dev-tools/load';
 
 const localStorageCache = {};
 
@@ -100,4 +100,15 @@ export const isDevToolsEnvValid = (value: any) => {
     typeof value?.clientID === 'string' &&
     typeof value?.label === 'string'
   );
+};
+
+export const getEnvLocalStorageOverrides = () => {
+  if (devToolsEnabled() && process.env.NODE_ENV === 'development') {
+    const localStorageOverrides = storage.devToolsEnv.get();
+    if (localStorageOverrides) {
+      return localStorageOverrides;
+    }
+  }
+
+  return undefined;
 };
