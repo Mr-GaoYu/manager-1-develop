@@ -1,26 +1,26 @@
 import {
-  // EntityState,
   createReducer,
   Reducer,
   ActionReducerMapBuilder
 } from '@reduxjs/toolkit';
 import { Domain } from '@rua/api-v1/lib/domains';
 import {
+  getDomainsActions,
   getDomainsPageActions,
   createDomainActions,
   updateDomainActions,
   deleteDomainActions
-  // onDeleteSuccess
 } from './domains.actions';
 import {
-  // onStart,
+  onStart,
   onError,
   onCreateOrUpdate,
   setError,
-  createDefaultState
+  createDefaultState,
+  onGetAllSuccess,
+  onDeleteSuccess
 } from 'src/store/store.helpers.tmp';
 import { MappedEntityState, EntityError } from 'src/store/types';
-
 export type State = MappedEntityState<Domain, EntityError>;
 
 export const initialState: State = createDefaultState({}, {});
@@ -33,7 +33,6 @@ const reducer: Reducer<State> = createReducer(
         return setError({ read: undefined }, state);
       })
       .addCase(getDomainsPageActions.fulfilled, (state, actions) => {
-        console.log(actions.payload, 222222222);
         return { ...state, isFetching: true };
       })
       .addCase(getDomainsPageActions.rejected, (state, actions) => {
@@ -75,15 +74,31 @@ const reducer: Reducer<State> = createReducer(
       .addCase(deleteDomainActions.pending, (state) => {
         return setError({ delete: undefined }, state);
       })
-      .addCase(deleteDomainActions.fulfilled, () => {
-        // const { payload } = actions;
-        // return onDeleteSuccess(payload.domainId, state);
+      .addCase(deleteDomainActions.fulfilled, (state, actions) => {
+        const { arg } = actions.meta;
+        return onDeleteSuccess(arg.domainId, state);
       })
       .addCase(deleteDomainActions.rejected, (state, actions) => {
         const { error } = actions;
         return onError(
           {
             delete: error
+          },
+          state
+        );
+      })
+      .addCase(getDomainsActions.pending, (state) => {
+        return onStart(state);
+      })
+      .addCase(getDomainsActions.fulfilled, (state, actions) => {
+        const { payload } = actions;
+        return onGetAllSuccess(payload.data, state, payload.results);
+      })
+      .addCase(getDomainsActions.rejected, (state, actions) => {
+        const { error } = actions;
+        return onError(
+          {
+            read: error
           },
           state
         );

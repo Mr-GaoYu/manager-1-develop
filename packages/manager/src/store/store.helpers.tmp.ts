@@ -57,6 +57,22 @@ export const removeMany = <E extends Entity, O = APIError[] | undefined>(
   };
 };
 
+export const onGetAllSuccess = <E extends Entity, S>(
+  items: E[],
+  state: S,
+  results: number,
+  update: (e: E) => E = (i) => i
+): S =>
+  Object.assign({}, state, {
+    loading: false,
+    lastUpdated: Date.now(),
+    results,
+    itemsById: items.reduce(
+      (itemsById, item) => ({ ...itemsById, [item.id]: update(item) }),
+      {}
+    )
+  });
+
 export const createDefaultState = <E extends Entity, O extends EntityError>(
   override: Partial<MappedEntityState<E, O>> = {},
   defaultError: O = {} as O

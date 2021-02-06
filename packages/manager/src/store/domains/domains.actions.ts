@@ -11,6 +11,7 @@ import { ResourcePage } from '@rua/api-v1/lib/types';
 import { getAll, GetAllData } from 'src/utilities/getAll';
 import { createRequestThunk } from 'src/store/store.helpers';
 import { APIErrorConfig } from 'src/store/types';
+import { getAPIErrorOrDefault } from 'src/utilities/errorUtils';
 
 export interface DomainId {
   domainId: number;
@@ -23,7 +24,7 @@ export interface PageParams {
 
 export type UpdateDomainParams = DomainId & UpdateDomainPayload;
 
-const DOMAINS = `@@manager/domains`;
+const DOMAINS = `@@manager/Domains`;
 
 export const createDomainActions = createRequestThunk<
   Domain,
@@ -45,11 +46,19 @@ export const deleteDomainActions = createRequestThunk<
   APIErrorConfig
 >(`${DOMAINS}/delete`, ({ domainId }) => deleteDomain(domainId));
 
-export const getDomainActions = createRequestThunk<
+export const getDomainsActions = createRequestThunk<
   GetAllData<Domain>,
   void,
   APIErrorConfig
->(`${DOMAINS}/get-all`, () => getAll<Domain>(getDomains, undefined)({}, {}));
+>(`${DOMAINS}/get-all`, () =>
+  getAll<Domain>(getDomains)().catch((err) => {
+    const errors = getAPIErrorOrDefault(
+      err,
+      'There was an error retrieving your Domains.'
+    );
+    return Promise.reject(errors);
+  })
+);
 
 export const getDomainsPageActions = createRequestThunk<
   ResourcePage<Domain>,

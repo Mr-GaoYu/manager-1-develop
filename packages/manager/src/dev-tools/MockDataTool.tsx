@@ -14,6 +14,7 @@ const MockDataTool: React.FC<{}> = () => {
 
   const handleInputChange = (key: keyof MockData, quantity: number) => {
     const newMockData: MockData = { [key]: { mocked: true, quantity } };
+
     mockDataController.updateMockData(newMockData);
   };
 

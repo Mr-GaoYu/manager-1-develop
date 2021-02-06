@@ -33,6 +33,10 @@ export const setStorage = (key: string, value: string) => {
 };
 
 const DEV_TOOLS_ENV = 'devTools/env';
+const TOKEN = 'authentication/token';
+const NONCE = 'authentication/nonce';
+const SCOPES = 'authentication/scopes';
+const EXPIRE = 'authentication/expire';
 
 export interface DevToolsEnv {
   apiRoot: string;
@@ -41,7 +45,18 @@ export interface DevToolsEnv {
   label: string;
 }
 
+interface AuthGetAndSet {
+  get: () => any;
+  set: (value: string) => void;
+}
+
 export interface Storage {
+  authentication: {
+    token: AuthGetAndSet;
+    nonce: AuthGetAndSet;
+    scopes: AuthGetAndSet;
+    expire: AuthGetAndSet;
+  };
   devToolsEnv: {
     get: () => DevToolsEnv | null;
     set: (devToolsEnv: DevToolsEnv) => void;
@@ -49,6 +64,24 @@ export interface Storage {
 }
 
 export const storage: Storage = {
+  authentication: {
+    token: {
+      get: () => getStorage(TOKEN),
+      set: (v) => setStorage(TOKEN, v)
+    },
+    nonce: {
+      get: () => getStorage(NONCE),
+      set: (v) => setStorage(NONCE, v)
+    },
+    scopes: {
+      get: () => getStorage(SCOPES),
+      set: (v) => setStorage(SCOPES, v)
+    },
+    expire: {
+      get: () => getStorage(EXPIRE),
+      set: (v) => setStorage(EXPIRE, v)
+    }
+  },
   devToolsEnv: {
     get: () => {
       const value = getStorage(DEV_TOOLS_ENV);
@@ -57,6 +90,8 @@ export const storage: Storage = {
     set: (devToolsEnv) => setStorage(DEV_TOOLS_ENV, JSON.stringify(devToolsEnv))
   }
 };
+
+export const { authentication } = storage;
 
 export const isDevToolsEnvValid = (value: any) => {
   return (

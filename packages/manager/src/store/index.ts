@@ -3,6 +3,9 @@ import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import domains, {
   State as DomainsState
 } from 'src/store/domains/domains.reducer';
+import authentication, {
+  State as AuthState
+} from 'src/store/authentication/authentication.reducer';
 
 export interface ResourcesState {
   domains: DomainsState;
@@ -10,6 +13,7 @@ export interface ResourcesState {
 
 export interface ApplicationState {
   __resources: ResourcesState;
+  authentication: AuthState;
 }
 /**
  *
@@ -20,7 +24,8 @@ const __resources = combineReducers({
 });
 
 const rootReducer = combineReducers<ApplicationState>({
-  __resources
+  __resources,
+  authentication
 });
 
 const middlewares = [...getDefaultMiddleware<ApplicationState>()];
