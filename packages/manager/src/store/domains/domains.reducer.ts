@@ -32,7 +32,7 @@ const reducer: Reducer<State> = createReducer(
       .addCase(getDomainsPageActions.pending, (state) => {
         return setError({ read: undefined }, state);
       })
-      .addCase(getDomainsPageActions.fulfilled, (state, actions) => {
+      .addCase(getDomainsPageActions.fulfilled, (state) => {
         return { ...state, isFetching: true };
       })
       .addCase(getDomainsPageActions.rejected, (state, actions) => {
