@@ -97,10 +97,11 @@ const reducer: Reducer<State> = createReducer(
         };
       })
       .addCase(handleRefreshTokens, (state) => {
-        const [localToken, localScopes, localExpiry] =
-          (tokenInLocalStorage.get(),
+        const [localToken, localScopes, localExpiry] = [
+          tokenInLocalStorage.get(),
           scopesInLocalStorage.get(),
-          expiryInLocalStorage.get());
+          expiryInLocalStorage.get()
+        ];
 
         return {
           ...state,
