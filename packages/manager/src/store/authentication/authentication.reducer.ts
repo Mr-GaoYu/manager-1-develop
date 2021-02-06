@@ -3,8 +3,15 @@ import {
   Reducer,
   ActionReducerMapBuilder
 } from '@reduxjs/toolkit';
-import { handleStartSession, handleInitTokens } from './authentication.actions';
+import {
+  handleStartSession,
+  handleInitTokens,
+  handleLogout,
+  handleRefreshTokens
+} from './authentication.actions';
 import { authentication } from 'src/utilities/storage';
+import { redirectToLogin } from 'src/utilities/session';
+import { clearLocalStorage } from './authentication.helpers';
 
 export interface State {
   token: null | string;
@@ -49,6 +56,8 @@ const reducer: Reducer<State> = createReducer(
         const expiryDate = new Date(expiryDateFromLocalStorage);
 
         if (expiryDateFromLocalStorage && expiryDate < new Date()) {
+          redirectToLogin(location.pathname, location.search);
+
           return {
             ...state,
             token: null,
@@ -57,11 +66,47 @@ const reducer: Reducer<State> = createReducer(
           };
         }
 
+        const token = tokenInLocalStorage.get();
+        const scopes = scopesInLocalStorage.get();
+
+        if (!token) {
+          redirectToLogin(location.pathname, location.search);
+        }
+
+        const isLoggedInAsCustomer = (token || '')
+          .toLowerCase()
+          .includes('admin');
+
         return {
           ...state,
-          token: null,
+          token,
+          scopes,
+          expiration: expiryDateFromLocalStorage,
+          loggedInAsCustomer: isLoggedInAsCustomer
+        };
+      })
+      .addCase(handleLogout, (state) => {
+        clearLocalStorage();
+
+        return {
+          ...state,
           scopes: null,
-          expiration: null
+          token: null,
+          expiration: null,
+          loggedInAsCustomer: false
+        };
+      })
+      .addCase(handleRefreshTokens, (state) => {
+        const [localToken, localScopes, localExpiry] =
+          (tokenInLocalStorage.get(),
+          scopesInLocalStorage.get(),
+          expiryInLocalStorage.get());
+
+        return {
+          ...state,
+          token: localToken,
+          scopes: localScopes,
+          expiration: localExpiry
         };
       })
 );
