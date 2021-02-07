@@ -6,9 +6,13 @@ import domains, {
 import authentication, {
   State as AuthState
 } from 'src/store/authentication/authentication.reducer';
+import accountManagement, {
+  State as AccountManagementState
+} from 'src/store/accountManagement/accountManagement.reducer';
 
 export interface ResourcesState {
   domains: DomainsState;
+  accountManagement: AccountManagementState;
 }
 
 export interface ApplicationState {
@@ -20,7 +24,8 @@ export interface ApplicationState {
  * Reducers
  */
 const __resources = combineReducers({
-  domains
+  domains,
+  accountManagement
 });
 
 const rootReducer = combineReducers<ApplicationState>({
