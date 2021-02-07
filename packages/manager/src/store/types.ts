@@ -1,4 +1,10 @@
 import { APIError } from '@rua/api-v1/lib/types';
+import {
+  ThunkAction,
+  Action,
+  ThunkDispatch as _ThunkDispatch
+} from '@reduxjs/toolkit';
+import { ApplicationState } from 'src/store';
 
 export type APIErrorConfig = {
   serializedErrorType: APIError[];
@@ -29,3 +35,17 @@ export interface MappedEntityState<T extends Entity, E = EntityError> {
   itemsById: Record<string, T>;
   results: number;
 }
+
+export type ThunkResult<T> = ThunkAction<
+  T,
+  ApplicationState,
+  undefined,
+  Action
+>;
+
+export type ThunkActionCreator<ReturnType, Params = void> = (
+  args: Params,
+  ...args2: any[]
+) => ThunkResult<ReturnType>;
+
+export type ThunkDispatch = _ThunkDispatch<ApplicationState, undefined, Action>;

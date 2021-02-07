@@ -1,4 +1,4 @@
-import { API_MAX_PAGE_SIZE } from 'src/constants';
+import { API_MAX_PAGE_SIZE } from 'src/website/constants';
 import { range } from 'ramda';
 
 export interface APIResponsePage<T> {

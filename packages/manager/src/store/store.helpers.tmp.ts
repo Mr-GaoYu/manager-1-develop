@@ -84,3 +84,19 @@ export const createDefaultState = <E extends Entity, O extends EntityError>(
   results: 0,
   ...override
 });
+
+export const onGetPageSuccess = <E extends Entity>(
+  items: E[],
+  state: MappedEntityState<E, EntityError>,
+  results: number
+): MappedEntityState<E, EntityError> => {
+  const isFullRequest = results === items.length;
+  const newState = addMany(items, state, results);
+  return isFullRequest
+    ? {
+        ...newState,
+        lastUpdated: Date.now(),
+        loading: false
+      }
+    : { ...newState, loading: false };
+};

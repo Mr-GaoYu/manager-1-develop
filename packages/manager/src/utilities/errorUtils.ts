@@ -1,5 +1,5 @@
 import { APIError } from '@rua/api-v1/lib/types';
-import { DEFAULT_ERROR_MESSAGE } from 'src/constants';
+import { DEFAULT_ERROR_MESSAGE } from 'src/website/constants';
 
 export const getAPIErrorOrDefault = (
   errorResponse: APIError[],

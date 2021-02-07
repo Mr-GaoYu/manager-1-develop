@@ -2,12 +2,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from 'src/store';
 import { handleStartSession } from 'src/store/authentication/authentication.actions';
+// import { checkAccountSize } from 'src/store/accountManagement/accountManagement.requests';
 
 const AuthenticationWrapper: React.FC = () => {
   // const [showChildren, setShowChildren] = React.useState<Boolean>(false);
 
   // const [hasEnsuredAllTypes, setHasEnsuredAllTypes] = React.useState<Boolean>(false);
-
   const dispatch = useDispatch();
   const counter = useSelector((state: ApplicationState) => state);
 
@@ -15,14 +15,17 @@ const AuthenticationWrapper: React.FC = () => {
     console.log(counter);
   }, [counter]);
 
-  const a = () =>
-    dispatch(
+  const a = () => {
+    const b = dispatch(
       handleStartSession({
-        token: 'asdasd',
-        scopes: 'asdasd',
-        expires: 'asdasd'
+        token: 'string',
+        scopes: 'string',
+        expires: 'string'
       })
     );
+
+    return b;
+  };
 
   return (
     <div className="App" onClick={a} role="button" tabIndex={0} onKeyDown={a}>

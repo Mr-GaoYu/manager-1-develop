@@ -1,9 +1,9 @@
 import {
-  createDomain,
+  createDomain as _createDomain,
   CreateDomainPayload,
-  deleteDomain,
-  getDomains,
-  updateDomain,
+  deleteDomain as _deleteDomain,
+  getDomains as _getDomains,
+  updateDomain as _updateDomain,
   UpdateDomainPayload,
   Domain
 } from '@rua/api-v1/lib/domains';
@@ -26,32 +26,31 @@ export type UpdateDomainParams = DomainId & UpdateDomainPayload;
 
 const DOMAINS = `@@manager/Domains`;
 
-export const createDomainActions = createRequestThunk<
+export const createDomain = createRequestThunk<
   Domain,
   CreateDomainPayload,
   APIErrorConfig
->(`${DOMAINS}/create`, (payload) => createDomain(payload));
+>(`${DOMAINS}/create`, (payload) => _createDomain(payload));
 
-export const updateDomainActions = createRequestThunk<
+export const updateDomain = createRequestThunk<
   Domain,
   UpdateDomainParams,
   APIErrorConfig
 >(`${DOMAINS}/update`, ({ domainId, ...payload }) =>
-  updateDomain(domainId, payload)
+  _updateDomain(domainId, payload)
 );
 
-export const deleteDomainActions = createRequestThunk<
-  {},
-  DomainId,
-  APIErrorConfig
->(`${DOMAINS}/delete`, ({ domainId }) => deleteDomain(domainId));
+export const deleteDomain = createRequestThunk<{}, DomainId, APIErrorConfig>(
+  `${DOMAINS}/delete`,
+  ({ domainId }) => _deleteDomain(domainId)
+);
 
-export const getDomainsActions = createRequestThunk<
+export const getDomains = createRequestThunk<
   GetAllData<Domain>,
   void,
   APIErrorConfig
 >(`${DOMAINS}/get-all`, () =>
-  getAll<Domain>(getDomains)().catch((err) => {
+  getAll<Domain>(_getDomains)().catch((err) => {
     const errors = getAPIErrorOrDefault(
       err,
       'There was an error retrieving your Domains.'
@@ -60,8 +59,8 @@ export const getDomainsActions = createRequestThunk<
   })
 );
 
-export const getDomainsPageActions = createRequestThunk<
+export const getDomainsPage = createRequestThunk<
   ResourcePage<Domain>,
   PageParams,
   APIErrorConfig
->(`${DOMAINS}/get-page`, ({ params, filters }) => getDomains(params, filters));
+>(`${DOMAINS}/get-page`, ({ params, filters }) => _getDomains(params, filters));

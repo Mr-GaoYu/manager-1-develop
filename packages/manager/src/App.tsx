@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDomainsActions } from 'src/store/domains/domains.actions';
+import { getDomains } from 'src/store/domains/domains.actions';
 import { ApplicationState } from 'src/store';
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
     console.log(counter);
   }, [counter]);
 
-  const a = () => dispatch(getDomainsActions());
+  const a = () => dispatch(getDomains());
   return (
     <div className="App" onClick={a} role="button" tabIndex={0} onKeyDown={a}>
       aaaa

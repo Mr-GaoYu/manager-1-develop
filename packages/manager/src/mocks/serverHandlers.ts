@@ -4,14 +4,14 @@ import { domainFactory } from 'src/factories';
 
 export const makeResourcePage = (
   e: any[],
-  override: { page: number; pages: number; total?: number } = {
+  override: { page: number; pages: number; results?: number } = {
     page: 1,
     pages: 1
   }
 ) => ({
   page: override.page ?? 1,
   pages: override.pages ?? 1,
-  total: override.total ?? e.length,
+  results: override.results ?? e.length,
   data: e
 });
 
