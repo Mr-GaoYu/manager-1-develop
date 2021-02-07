@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from 'src/store';
-import { handleStartSession } from 'src/store/authentication/authentication.actions';
-// import { checkAccountSize } from 'src/store/accountManagement/accountManagement.requests';
+// import { handleStartSession } from 'src/store/authentication/authentication.actions';
+import { checkAccountSize } from 'src/store/accountManagement/accountManagement.requests';
 
 const AuthenticationWrapper: React.FC = () => {
   // const [showChildren, setShowChildren] = React.useState<Boolean>(false);
@@ -16,15 +16,7 @@ const AuthenticationWrapper: React.FC = () => {
   }, [counter]);
 
   const a = () => {
-    const b = dispatch(
-      handleStartSession({
-        token: 'string',
-        scopes: 'string',
-        expires: 'string'
-      })
-    );
-
-    return b;
+    dispatch(checkAccountSize());
   };
 
   return (

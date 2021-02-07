@@ -6,8 +6,9 @@ import {
 } from '@reduxjs/toolkit';
 import { ApplicationState } from 'src/store';
 
-export type APIErrorConfig = {
+export type AsyncThunkConfig = {
   serializedErrorType: APIError[];
+  state: ApplicationState;
 };
 export interface HasStringID {
   id: string;
@@ -36,12 +37,7 @@ export interface MappedEntityState<T extends Entity, E = EntityError> {
   results: number;
 }
 
-export type ThunkResult<T> = ThunkAction<
-  T,
-  ApplicationState,
-  undefined,
-  Action
->;
+export type ThunkResult<T> = ThunkAction<T, ApplicationState, null, Action>;
 
 export type ThunkActionCreator<ReturnType, Params = void> = (
   args: Params,

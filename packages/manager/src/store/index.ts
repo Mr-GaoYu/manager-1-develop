@@ -12,7 +12,7 @@ import accountManagement, {
 import initialLoad, {
   State as InitialLoadState
 } from 'src/store/initialLoad/initialLoad.reducer';
-
+import { getFirebase } from 'react-redux-firebase';
 export interface ResourcesState {
   domains: DomainsState;
   accountManagement: AccountManagementState;
@@ -38,7 +38,13 @@ const rootReducer = combineReducers<ApplicationState>({
   initialLoad
 });
 
-const middlewares = [...getDefaultMiddleware<ApplicationState>()];
+const middlewares = [
+  ...getDefaultMiddleware({
+    thunk: {
+      extraArgument: { getFirebase }
+    }
+  })
+];
 
 export default configureStore({
   reducer: rootReducer,

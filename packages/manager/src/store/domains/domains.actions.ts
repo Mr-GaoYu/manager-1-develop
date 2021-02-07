@@ -10,7 +10,7 @@ import {
 import { ResourcePage } from '@rua/api-v1/lib/types';
 import { getAll, GetAllData } from 'src/utilities/getAll';
 import { createRequestThunk } from 'src/store/store.helpers';
-import { APIErrorConfig } from 'src/store/types';
+import { AsyncThunkConfig } from 'src/store/types';
 import { getAPIErrorOrDefault } from 'src/utilities/errorUtils';
 
 export interface DomainId {
@@ -29,18 +29,18 @@ const DOMAINS = `@@manager/Domains`;
 export const createDomain = createRequestThunk<
   Domain,
   CreateDomainPayload,
-  APIErrorConfig
+  AsyncThunkConfig
 >(`${DOMAINS}/create`, (payload) => _createDomain(payload));
 
 export const updateDomain = createRequestThunk<
   Domain,
   UpdateDomainParams,
-  APIErrorConfig
+  AsyncThunkConfig
 >(`${DOMAINS}/update`, ({ domainId, ...payload }) =>
   _updateDomain(domainId, payload)
 );
 
-export const deleteDomain = createRequestThunk<{}, DomainId, APIErrorConfig>(
+export const deleteDomain = createRequestThunk<{}, DomainId, AsyncThunkConfig>(
   `${DOMAINS}/delete`,
   ({ domainId }) => _deleteDomain(domainId)
 );
@@ -48,7 +48,7 @@ export const deleteDomain = createRequestThunk<{}, DomainId, APIErrorConfig>(
 export const getDomains = createRequestThunk<
   GetAllData<Domain>,
   void,
-  APIErrorConfig
+  AsyncThunkConfig
 >(`${DOMAINS}/get-all`, () =>
   getAll<Domain>(_getDomains)().catch((err) => {
     const errors = getAPIErrorOrDefault(
@@ -62,5 +62,5 @@ export const getDomains = createRequestThunk<
 export const getDomainsPage = createRequestThunk<
   ResourcePage<Domain>,
   PageParams,
-  APIErrorConfig
+  AsyncThunkConfig
 >(`${DOMAINS}/get-page`, ({ params, filters }) => _getDomains(params, filters));
