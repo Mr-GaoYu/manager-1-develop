@@ -9,6 +9,9 @@ import authentication, {
 import accountManagement, {
   State as AccountManagementState
 } from 'src/store/accountManagement/accountManagement.reducer';
+import initialLoad, {
+  State as InitialLoadState
+} from 'src/store/initialLoad/initialLoad.reducer';
 
 export interface ResourcesState {
   domains: DomainsState;
@@ -18,6 +21,7 @@ export interface ResourcesState {
 export interface ApplicationState {
   __resources: ResourcesState;
   authentication: AuthState;
+  initialLoad: InitialLoadState;
 }
 /**
  *
@@ -30,7 +34,8 @@ const __resources = combineReducers({
 
 const rootReducer = combineReducers<ApplicationState>({
   __resources,
-  authentication
+  authentication,
+  initialLoad
 });
 
 const middlewares = [...getDefaultMiddleware<ApplicationState>()];
