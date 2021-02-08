@@ -1,6 +1,14 @@
 import React from 'react';
 
-const AuthenticationWrapper: React.FC<{}> = (props) => {
+interface AuthenticationWrapperProps {}
+
+const defaultProps: Partial<AuthenticationWrapperProps> = {
+  isAuthenticated: false
+};
+
+type CombinedProps = AuthenticationWrapperProps;
+
+const AuthenticationWrapper: React.FC<CombinedProps> = (props) => {
   const [showChildren] = React.useState<boolean>(false);
 
   return (
@@ -8,9 +16,14 @@ const AuthenticationWrapper: React.FC<{}> = (props) => {
   );
 };
 
-AuthenticationWrapper.defaultProps = {
-  isAuthenticated: false
-};
+// interface StateProps {
+//   isAuthenticated: boolean;
+//   ruaLoading: boolean;
+//   ruaLastUpdated: number;
+
+// }
+
+AuthenticationWrapper.defaultProps = defaultProps;
 AuthenticationWrapper.displayName = 'AuthenticationWrapper';
 
 export default AuthenticationWrapper;

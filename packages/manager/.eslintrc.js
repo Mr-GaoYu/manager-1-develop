@@ -81,7 +81,7 @@ module.exports = {
     'react/display-name': 'off',
     'react/prop-types': 'off',
     'react/jsx-no-script-url': 'error',
-    'react/jsx-no-useless-fragment': 'warn',
+    'react/jsx-no-useless-fragment': 'off',
     'react/jsx-no-bind': 'off',
     'react/no-unescaped-entities': 'warn',
     'sonarjs/cognitive-complexity': 'off',
