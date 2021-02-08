@@ -37,7 +37,12 @@ export interface MappedEntityState<T extends Entity, E = EntityError> {
   results: number;
 }
 
-export type ThunkResult<T> = ThunkAction<T, ApplicationState, null, Action>;
+export type ThunkResult<T> = ThunkAction<
+  T,
+  ApplicationState,
+  null,
+  Action<string>
+>;
 
 export type ThunkActionCreator<ReturnType, Params = void> = (
   args: Params,
