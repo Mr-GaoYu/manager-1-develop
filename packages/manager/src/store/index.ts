@@ -16,15 +16,27 @@ import initialLoad, {
   defaultState as initialLoadState,
   State as InitialLoadState
 } from 'src/store/initialLoad/initialLoad.reducer';
+import account, {
+  defaultState as defaultAccountState,
+  State as AccountState
+} from 'src/store/account/account.reducer';
+import accountSettings, {
+  defaultState as defaultAccountSettingsState,
+  State as AccountSettingsState
+} from 'src/store/accountSettings/accountSettings.reducer';
 // import { getFirebase } from 'react-redux-firebase';
 
 const __resourcesDefaultState = {
+  account: defaultAccountState,
   domains: defaultDomainsState,
-  accountManagement: defaultAccountManagementState
+  accountManagement: defaultAccountManagementState,
+  accountSettings: defaultAccountSettingsState
 };
 export interface ResourcesState {
+  account: AccountState;
   domains: DomainsState;
   accountManagement: AccountManagementState;
+  accountSettings: AccountSettingsState;
 }
 
 export interface ApplicationState {
@@ -44,8 +56,10 @@ export const defaultState: ApplicationState = {
  * Reducers
  */
 const __resources = combineReducers({
+  account,
   domains,
-  accountManagement
+  accountManagement,
+  accountSettings
 });
 
 const reducers = combineReducers<ApplicationState>({

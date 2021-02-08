@@ -31,11 +31,19 @@ export interface MappedEntityState<T extends Entity, E = EntityError> {
   results: number;
 }
 
+export interface RequestableDataWithEntityError<D> {
+  lastUpdated: number;
+  loading: boolean;
+  data?: D;
+  results?: number;
+  error: EntityError;
+}
+
 export type ThunkResult<T> = ThunkAction<
   T,
   ApplicationState,
-  null,
-  Action<string>
+  undefined,
+  Action
 >;
 
 export type ThunkActionCreator<ReturnType, Params = void> = (
