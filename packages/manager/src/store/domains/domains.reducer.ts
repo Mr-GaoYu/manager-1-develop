@@ -115,12 +115,7 @@ const reducer: Reducer<State> = reducerWithInitialState(defaultState)
   .caseWithAction(
     getDomainsPageActions.failed,
     (state, { payload: { error } }) => {
-      return onError(
-        {
-          read: error
-        },
-        state
-      );
+      return onError({ read: error }, state);
     }
   )
   .default((state) => state);
