@@ -12555,6 +12555,11 @@ typedarray@^0.0.6:
   resolved "https://registry.npm.taobao.org/typedarray/download/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
+typescript-fsa-reducers@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.npm.taobao.org/typescript-fsa-reducers/download/typescript-fsa-reducers-1.2.2.tgz#1e2c8e8a50ca3e09e0d6fdf2a3b42bdd17de8094"
+  integrity sha1-HiyOilDKPgng1v3yo7Qr3RfegJQ=
+
 typescript-fsa@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/typescript-fsa/download/typescript-fsa-3.0.0.tgz#3ad1cb915a67338e013fc21f67c9b3e0e110c912"

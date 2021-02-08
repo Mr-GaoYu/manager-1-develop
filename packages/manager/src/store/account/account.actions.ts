@@ -1,5 +1,3 @@
-import { createAction } from '@reduxjs/toolkit';
+import { actionCreatorFactory } from 'typescript-fsa';
 
-const ACCOUNT = `@@manager/Account`;
-
-export const saveCreditCard = createAction(`${ACCOUNT}/UPDATE_CREDIT_CARD`);
+export const actionCreator = actionCreatorFactory(`@@manager/Account`);

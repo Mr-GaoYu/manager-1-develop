@@ -1,15 +1,9 @@
 import { APIError } from '@rua/api-v1/lib/types';
-import {
-  ThunkAction,
-  Action,
-  ThunkDispatch as _ThunkDispatch
-} from '@reduxjs/toolkit';
+import { MapStateToProps as _MapStateToProps } from 'react-redux';
+import { Action } from 'redux';
+import { ThunkAction, ThunkDispatch as _ThunkDispatch } from 'redux-thunk';
 import { ApplicationState } from 'src/store';
 
-export type AsyncThunkConfig = {
-  serializedErrorType: APIError[];
-  state: ApplicationState;
-};
 export interface HasStringID {
   id: string;
 }

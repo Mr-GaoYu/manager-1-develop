@@ -1,7 +1,5 @@
-import { createAction } from '@reduxjs/toolkit';
+import { actionCreatorFactory } from 'typescript-fsa';
 
-const ACCOUNT_MANAGEMENT = `@@manager/AccountManagement`;
+const actionCreator = actionCreatorFactory(`@@manager/AccountManagement`);
 
-export const setLargeAccount = createAction<boolean>(
-  `${ACCOUNT_MANAGEMENT}/SET_LARGE_ACCOUNT`
-);
+export const setLargeAccount = actionCreator<boolean>(`set-large-account`);

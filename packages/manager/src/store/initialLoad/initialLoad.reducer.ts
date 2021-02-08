@@ -1,29 +1,20 @@
-import {
-  createReducer,
-  Reducer,
-  ActionReducerMapBuilder
-} from '@reduxjs/toolkit';
+import { reducerWithInitialState } from 'typescript-fsa-reducers';
 import { handleLoadingDone } from './initialLoad.actions';
-
 export interface State {
   appIsLoading: boolean;
   loadingText: string;
 }
 
-export const initialState: State = {
+export const defaultState: State = {
   appIsLoading: true,
   loadingText: ''
 };
 
-const reducer: Reducer<State> = createReducer(
-  initialState,
-  (builder: ActionReducerMapBuilder<State>) =>
-    builder.addCase(handleLoadingDone, (state) => {
-      return {
-        ...state,
-        appIsLoading: false
-      };
-    })
-);
+const reducer = reducerWithInitialState(defaultState)
+  .case(handleLoadingDone, (state) => ({
+    ...state,
+    appIsLoading: false
+  }))
+  .default((state) => state);
 
 export default reducer;

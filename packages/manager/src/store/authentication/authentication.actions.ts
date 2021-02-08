@@ -1,6 +1,6 @@
-import { createAction } from '@reduxjs/toolkit';
+import actionCreatorFactory from 'typescript-fsa';
 
-const AUTHENTICATION = `@@manager/Authentication`;
+const actionCreator = actionCreatorFactory('@@manager/Authentication');
 
 interface TokensWithExpiry {
   token: string;
@@ -8,14 +8,12 @@ interface TokensWithExpiry {
   expires: string;
 }
 
-export const handleStartSession = createAction<TokensWithExpiry>(
-  `${AUTHENTICATION}/START_SESSION`
+export const handleStartSession = actionCreator<TokensWithExpiry>(
+  'START_SESSION'
 );
 
-export const handleInitTokens = createAction(`${AUTHENTICATION}/INIT_TOKENS`);
+export const handleInitTokens = actionCreator('INIT_TOKENS');
 
-export const handleRefreshTokens = createAction(
-  `${AUTHENTICATION}/REFRESH_TOKENS`
-);
+export const handleRefreshTokens = actionCreator('REFRESH_TOKENS');
 
-export const handleLogout = createAction(`${AUTHENTICATION}/LOGOUT`);
+export const handleLogout = actionCreator('LOGOUT');

@@ -1,5 +1,5 @@
-import { createAction } from '@reduxjs/toolkit';
+import actionCreatorFactory from 'typescript-fsa';
 
-const INITIAL_LOAD = `@@manager/LOADING`;
+const actionCreator = actionCreatorFactory('@@manager/LOADING');
 
-export const handleLoadingDone = createAction(`${INITIAL_LOAD}/DONE`);
+export const handleLoadingDone = actionCreator('DONE');
