@@ -4,6 +4,8 @@ import { Action } from 'redux';
 import { ThunkAction, ThunkDispatch as _ThunkDispatch } from 'redux-thunk';
 import { ApplicationState } from 'src/store';
 
+export type MapState<S, O> = _MapStateToProps<S, O, ApplicationState>;
+
 export interface HasStringID {
   id: string;
 }

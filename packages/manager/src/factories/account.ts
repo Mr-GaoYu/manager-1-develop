@@ -1,4 +1,4 @@
-import Factory from 'factory.ts';
+import * as Factory from 'factory.ts';
 import { Account } from '@rua/api-v1/lib/account';
 
 export const accountFactory = Factory.Sync.makeFactory<Account>({
