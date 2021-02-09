@@ -1,4 +1,13 @@
-import { array, mixed, number, object, string, AnyObjectSchema } from 'yup';
+import {
+  array,
+  mixed,
+  number,
+  object,
+  string,
+  AnyObjectSchema,
+  SchemaOf
+} from 'yup';
+import { CreateDomainPayload } from './types';
 
 const domainSchemaBase = object().shape({
   domain: string().matches(

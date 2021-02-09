@@ -56,6 +56,16 @@ export const setHeaders = (newHeaders: any = {}) => (object: any) => {
     : object;
 };
 
+export const setXFilter = (xFilter: any) => {
+  return (object: any) =>
+    !isEmpty(xFilter)
+      ? {
+          ...object,
+          headers: { ...object.headers, 'X-Filter': JSON.stringify(xFilter) }
+        }
+      : object;
+};
+
 export const setData = <T extends {}>(
   data: T,
 

@@ -1,5 +1,11 @@
 module.exports = {
-  ignorePatterns: ['node_modules', 'lib', 'index.js', '!.eslintrc.js'],
+  ignorePatterns: [
+    'node_modules',
+    'lib',
+    'index.js',
+    '!.eslintrc.js',
+    '**/*.schema.ts'
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2020,

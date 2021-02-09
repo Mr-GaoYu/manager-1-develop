@@ -8,54 +8,41 @@ import { handleInitTokens } from 'src/store/authentication/authentication.action
 
 type CombinedProps = StateProps & DispatchProps;
 
-export class AuthenticationWrapper extends React.Component<CombinedProps> {
-  state = {
-    showChildren: false,
-    hasEnsuredAllTypes: false
-  };
+const defaultProps: Partial<CombinedProps> = {
+  isAuthenticated: false
+};
 
-  static defaultProps = {
-    isAuthenticated: false
-  };
+const AuthenticationWrapper: React.FC<CombinedProps> = (props) => {
+  const { isAuthenticated } = props;
 
-  makeInitialRequests = () => {
-    return;
-  };
+  const [showChildren, setShowChildren] = React.useState<boolean>(false);
 
-  makeSecondaryRequests = () => {
-    return;
-  };
-
-  componentDidMount() {
-    const { initSession } = this.props;
-
-    initSession();
-
-    if (this.props.isAuthenticated) {
-      this.setState({ showChildren: true });
-
-      this.makeInitialRequests();
+  const makeInitialRequests = React.useCallback(() => {
+    if (window.location?.pathname?.match(/ruas\/[0-9]+\/lish/)) {
+      return;
     }
-  }
+  }, []);
 
-  componentDidUpdate(prevProps: CombinedProps) {
-    if (
-      !prevProps.isAuthenticated &&
-      this.props.isAuthenticated &&
-      !this.state.showChildren
-    ) {
-      this.makeInitialRequests();
+  const ensureAllTypes = React.useCallback(() => {
+    return;
+  }, []);
 
-      return this.setState({ showChildren: true });
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      setShowChildren(true);
+      makeInitialRequests();
+      ensureAllTypes();
     }
-  }
+  }, [isAuthenticated, makeInitialRequests]);
 
-  render() {
-    const { children } = this.props;
-    const { showChildren } = this.state;
-    return <React.Fragment>{showChildren ? children : null}</React.Fragment>;
-  }
-}
+  return (
+    <React.Fragment>{showChildren ? props.children : null}</React.Fragment>
+  );
+};
+
+AuthenticationWrapper.defaultProps = defaultProps;
+AuthenticationWrapper.displayName = 'AuthenticationWrapper';
+
 interface StateProps {
   isAuthenticated: boolean;
 }
