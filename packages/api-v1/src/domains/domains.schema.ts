@@ -1,13 +1,5 @@
-import {
-  array,
-  mixed,
-  number,
-  object,
-  string,
-  AnyObjectSchema,
-  SchemaOf
-} from 'yup';
-import { CreateDomainPayload } from './types';
+import { array, mixed, number, object, string, SchemaOf } from 'yup';
+import { CreateDomainPayload, UpdateDomainPayload } from './types';
 
 const domainSchemaBase = object().shape({
   domain: string().matches(
@@ -29,18 +21,22 @@ const domainSchemaBase = object().shape({
   ttl_sec: number()
 });
 
-export const createDomainSchema: AnyObjectSchema = domainSchemaBase.shape({
-  domain: string()
-    .required('Domain is required.')
-    .matches(
-      /^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$/,
-      'Domain is not valid.'
-    )
-});
+export const createDomainSchema: SchemaOf<CreateDomainPayload> = domainSchemaBase
+  .shape({
+    domain: string()
+      .required('Domain is required.')
+      .matches(
+        /^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$/,
+        'Domain is not valid.'
+      )
+  })
+  .defined();
 
-export const updateDomainSchema: AnyObjectSchema = domainSchemaBase.shape({
-  domainId: number(),
-  soa_email: string().email('SOA Email is not valid.'),
-  axfr_ips: array().of(string()),
-  tags: array().of(string())
-});
+export const updateDomainSchema: SchemaOf<UpdateDomainPayload> = domainSchemaBase
+  .shape({
+    domainId: number(),
+    soa_email: string().email('SOA Email is not valid.'),
+    axfr_ips: array().of(string()),
+    tags: array().of(string())
+  })
+  .defined();

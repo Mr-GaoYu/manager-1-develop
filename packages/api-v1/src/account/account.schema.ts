@@ -1,6 +1,6 @@
-import { object, string, AnyObjectSchema, boolean } from 'yup';
+import { object, string, boolean } from 'yup';
 
-export const updateAccountSchema: AnyObjectSchema = object({
+export const updateAccountSchema = object({
   email: string().max(128, 'Email must be 128 characters or less.'),
   address_1: string().max(64, 'Address must be 64 characters or less.'),
   city: string().max(24, 'City must be 24 characters or less.'),
@@ -17,7 +17,7 @@ export const updateAccountSchema: AnyObjectSchema = object({
   zip: string().max(16, 'Zip code must be 16 characters or less.')
 });
 
-export const updateAccountSettingsSchema: AnyObjectSchema = object({
+export const updateAccountSettingsSchema = object({
   network_helper: boolean(),
   backups_enabled: boolean(),
   managed: boolean()
