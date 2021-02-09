@@ -1,6 +1,8 @@
 import React from 'react';
 
-interface AuthenticationWrapperProps {}
+interface AuthenticationWrapperProps {
+  isAuthenticated?: boolean;
+}
 
 const defaultProps: Partial<AuthenticationWrapperProps> = {
   isAuthenticated: false
@@ -9,7 +11,20 @@ const defaultProps: Partial<AuthenticationWrapperProps> = {
 type CombinedProps = AuthenticationWrapperProps;
 
 const AuthenticationWrapper: React.FC<CombinedProps> = (props) => {
-  const [showChildren] = React.useState<boolean>(false);
+  const [showChildren, setShowChildren] = React.useState<boolean>(false);
+
+  const makeInitialRequests = () => {
+    if (window.location?.pathname?.match(/ruas\/[0-9]+\/lish/)) {
+      return;
+    }
+  };
+
+  React.useEffect(() => {
+    if (props.isAuthenticated) {
+      setShowChildren(true);
+      makeInitialRequests();
+    }
+  }, [props.isAuthenticated]);
 
   return (
     <React.Fragment>{showChildren ? props.children : null}</React.Fragment>

@@ -1,6 +1,6 @@
 import { rest, RequestHandler } from 'msw';
 import { MockData } from 'src/dev-tools/mockDataController';
-import { domainFactory } from 'src/factories';
+import { domainFactory, accountFactory } from 'src/factories';
 
 export const makeResourcePage = (
   e: any[],
@@ -24,6 +24,16 @@ export const handlers = [
     const payload = req.body as any;
     const newDomains = domainFactory.build(payload);
     return res(ctx.json(newDomains));
+  }),
+  rest.get('*/account', (req, res, ctx) => {
+    const account = accountFactory.build({
+      balance: 50,
+      active_since: '2019-11-05'
+    });
+    return res(ctx.json(account));
+  }),
+  rest.put('*/account', (req, res, ctx) => {
+    return res(ctx.json({ ...accountFactory.build(), ...(req.body as any) }));
   })
 ];
 

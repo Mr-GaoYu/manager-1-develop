@@ -1,4 +1,4 @@
-import * as Factory from 'factory.ts';
+import Factory from 'factory.ts';
 import { Domain } from '@rua/api-v1/lib/domains/types';
 
 export const domainFactory = Factory.Sync.makeFactory<Domain>({
