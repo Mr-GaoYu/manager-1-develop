@@ -5,6 +5,8 @@ import { ThunkDispatch } from 'redux-thunk';
 import { ApplicationState } from 'src/store';
 import { MapState } from 'src/store/types';
 import { handleInitTokens } from 'src/store/authentication/authentication.actions';
+import { requestAccount } from 'src/store/account/account.requests';
+import { Account } from '@rua/api-v1/lib/account';
 
 type CombinedProps = StateProps & DispatchProps;
 
@@ -53,12 +55,14 @@ const mapStateToProps: MapState<StateProps, {}> = (state) => ({
 
 interface DispatchProps {
   initSession: () => void;
+  requestAccount: () => Promise<Account>;
 }
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (
   dispatch: ThunkDispatch<ApplicationState, undefined, Action<any>>
 ) => ({
-  initSession: () => dispatch(handleInitTokens())
+  initSession: () => dispatch(handleInitTokens()),
+  requestAccount: () => dispatch(requestAccount())
 });
 
 const connected = connect(mapStateToProps, mapDispatchToProps);

@@ -8,6 +8,7 @@ import Request, {
 } from '../request';
 import { ResourcePage as Page } from '../types';
 import { Rua, CreateRuaRequest } from './types';
+import { CreateRuaSchema } from './ruas.schema';
 
 export const getRua = (ruaId: number) =>
   Request<Rua>(setURL(`${API_ROOT}/rua/instances/${ruaId}`), setMethod('GET'));
@@ -38,12 +39,12 @@ export const getRuas = (params?: any, filter?: any) =>
     setParams(params)
   );
 
-// export const createRua = (data: CreateRuaRequest) =>
-// Request<Rua>(
-//   setURL(`${API_ROOT}/linode/instances`),
-//   setMethod('POST'),
-//   setData(data, CreateLinodeSchema)
-// );
+export const createRua = (data: CreateRuaRequest) =>
+  Request<Rua>(
+    setURL(`${API_ROOT}/linode/instances`),
+    setMethod('POST'),
+    setData(data, CreateRuaSchema)
+  );
 
 export const deleteRua = (ruaId: number) =>
   Request<{}>(

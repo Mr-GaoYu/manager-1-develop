@@ -1,5 +1,4 @@
-import { array, mixed, number, object, string, SchemaOf } from 'yup';
-import { CreateDomainPayload, UpdateDomainPayload } from './types';
+import { array, mixed, number, object, string } from 'yup';
 
 const domainSchemaBase = object().shape({
   domain: string().matches(
@@ -21,22 +20,39 @@ const domainSchemaBase = object().shape({
   ttl_sec: number()
 });
 
-export const createDomainSchema: SchemaOf<CreateDomainPayload> = domainSchemaBase
-  .shape({
-    domain: string()
-      .required('Domain is required.')
-      .matches(
-        /^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$/,
-        'Domain is not valid.'
-      )
-  })
-  .defined();
+export const createDomainSchema = domainSchemaBase.shape({
+  domain: string()
+    .required('Domain is required.')
+    .matches(
+      /([a-zA-Z0-9-_]+\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|XN--[a-zA-Z0-9]+)/,
+      'Domain is not valid.'
+    ),
+  tags: array().of(string()),
+  type: mixed().required().oneOf(['master', 'slave']),
+  soa_email: string()
+    .when('type', {
+      is: (type) => type === 'master',
+      then: string().required('SOA Email is required.'),
+      otherwise: string()
+    })
+    .email('SOA Email is not valid.'),
+  master_ips: array()
+    .of(string())
+    .when('type', {
+      is: (type) => type === 'slave',
+      then: array()
+        .of(string())
+        .compact()
+        .ensure()
+        .required('At least one primary IP address is required.')
+        .min(1, 'At least one primary IP address is required.'),
+      otherwise: array().of(string())
+    })
+});
 
-export const updateDomainSchema: SchemaOf<UpdateDomainPayload> = domainSchemaBase
-  .shape({
-    domainId: number(),
-    soa_email: string().email('SOA Email is not valid.'),
-    axfr_ips: array().of(string()),
-    tags: array().of(string())
-  })
-  .defined();
+export const updateDomainSchema = domainSchemaBase.shape({
+  domainId: number(),
+  soa_email: string().email('SOA Email is not valid.'),
+  axfr_ips: array().of(string()),
+  tags: array().of(string())
+});

@@ -51,3 +51,38 @@ export interface AccountSettings {
   backups_enabled: boolean;
   object_storage: 'active' | 'disabled' | 'suspended';
 }
+
+export type GrantLevel = null | 'read_only' | 'read_write';
+
+export interface Grant {
+  id: number;
+  premissions: GrantLevel;
+  label: string;
+}
+
+export type GlobalGrantTypes =
+  | 'add_linodes'
+  | 'add_longview'
+  | 'longview_subscription'
+  | 'account_access'
+  | 'cancel_account'
+  | 'add_domains'
+  | 'add_stackscripts'
+  | 'add_nodebalancers'
+  | 'add_images'
+  | 'add_volumes';
+
+export interface GlobalGrants {
+  global: Record<GlobalGrantTypes, boolean | GrantLevel>;
+}
+
+export type GrantType =
+  | 'linode'
+  | 'domain'
+  | 'nodebalancer'
+  | 'image'
+  | 'longview'
+  | 'stackscript'
+  | 'volume';
+
+export type Grants = GlobalGrants & Record<GrantType, Grant[]>;
