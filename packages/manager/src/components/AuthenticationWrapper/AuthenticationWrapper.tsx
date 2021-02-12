@@ -6,6 +6,7 @@ import { ApplicationState } from 'src/store';
 import { MapState } from 'src/store/types';
 import { handleInitTokens } from 'src/store/authentication/authentication.actions';
 import { requestAccount } from 'src/store/account/account.requests';
+import { requestProfile } from 'src/store/profile/profile.requests';
 import { Account } from '@rua/api-v1/lib/account';
 
 type CombinedProps = StateProps & DispatchProps;
@@ -62,7 +63,8 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (
   dispatch: ThunkDispatch<ApplicationState, undefined, Action<any>>
 ) => ({
   initSession: () => dispatch(handleInitTokens()),
-  requestAccount: () => dispatch(requestAccount())
+  requestAccount: () => dispatch(requestAccount()),
+  requestProfile: () => dispatch(requestProfile())
 });
 
 const connected = connect(mapStateToProps, mapDispatchToProps);

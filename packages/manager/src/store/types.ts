@@ -41,6 +41,13 @@ export interface RequestableDataWithEntityError<D> {
   error: EntityError;
 }
 
+export interface RequestableData<D, E = APIError[]> {
+  lastUpdated: number;
+  loading: boolean;
+  data?: D;
+  error?: E;
+}
+
 export type ThunkResult<T> = ThunkAction<
   T,
   ApplicationState,
