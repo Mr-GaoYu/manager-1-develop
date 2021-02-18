@@ -13,16 +13,33 @@ import {
   Switch
 } from 'react-router-dom';
 import AuthenticationWrapper from 'src/components/AuthenticationWrapper';
+import { QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { queryClient } from 'src/queries/base';
 
 const renderNull = () => <span>null route</span>;
 
 const renderNullAuth = () => <span>null auth route</span>;
 
+const renderLish = () => <div>2</div>;
+
+const renderApp = () => (
+  <QueryClientProvider client={queryClient}>
+    <ReactQueryDevtools
+      initialIsOpen={false}
+      toggleButtonProps={{ style: { marginLeft: '3em' } }}
+    />
+  </QueryClientProvider>
+);
+
 const renderAuthentication = () => (
   <Switch>
     <Route exact path="/nullauth" render={renderNullAuth} />
     <AuthenticationWrapper>
-      <Switch></Switch>
+      <Switch>
+        <Route path="/ruas/:ruaId/lish" render={renderLish} />
+        <Route render={renderApp} />
+      </Switch>
     </AuthenticationWrapper>
   </Switch>
 );

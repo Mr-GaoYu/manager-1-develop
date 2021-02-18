@@ -96,3 +96,31 @@ export interface RuaInterfacePayload {
   type: InterfaceType;
   vlan_id?: number;
 }
+
+export interface RuaType {
+  id: string;
+  disk: number;
+  class: RuaTypeClass;
+  price: PriceObject;
+  successor: string | null;
+  label: string;
+  addons: {
+    backups: { price: PriceObject };
+  };
+  network_out: number;
+  memory: number;
+  transfer: number;
+  vcpus: number;
+}
+
+export interface PriceObject {
+  monthly: number;
+  hourly: number;
+}
+
+export type RuaTypeClass =
+  | 'nanode'
+  | 'standard'
+  | 'dedicated'
+  | 'highmem'
+  | 'gpu';

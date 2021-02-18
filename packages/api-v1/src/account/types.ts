@@ -86,3 +86,37 @@ export type GrantType =
   | 'volume';
 
 export type Grants = GlobalGrants & Record<GrantType, Grant[]>;
+
+export interface Entity {
+  id: number;
+  label: string;
+  type: string;
+  url: string;
+}
+
+export type EventAction = 'account_update';
+
+export type EventStatus =
+  | 'scheduled'
+  | 'started'
+  | 'finished'
+  | 'failed'
+  | 'notification';
+
+export interface Event {
+  id: number;
+  action: EventAction;
+  created: string;
+  entity: Entity | null;
+  duration: number | null;
+  percent_complete: number | null;
+  rate: string | null;
+  read: boolean;
+  seen: boolean;
+  status: EventStatus;
+  time_remaining: null | string;
+  username: string;
+  secondary_entity: Entity | null;
+  _initial?: boolean;
+  message: string | null;
+}

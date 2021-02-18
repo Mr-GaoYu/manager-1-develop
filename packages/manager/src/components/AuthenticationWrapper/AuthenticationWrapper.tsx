@@ -7,44 +7,62 @@ import { MapState } from 'src/store/types';
 import { handleInitTokens } from 'src/store/authentication/authentication.actions';
 import { requestAccount } from 'src/store/account/account.requests';
 import { requestProfile } from 'src/store/profile/profile.requests';
+import { checkAccountSize } from 'src/store/accountManagement/accountManagement.requests';
 import { Account } from '@rua/api-v1/lib/account';
 
 type CombinedProps = StateProps & DispatchProps;
 
-const defaultProps: Partial<CombinedProps> = {
-  isAuthenticated: false
-};
+export class AuthenticationWrapper extends React.Component<CombinedProps> {
+  state = {
+    showChildren: false,
+    hasEnsuredAllTypes: false
+  };
 
-const AuthenticationWrapper: React.FC<CombinedProps> = (props) => {
-  const { isAuthenticated } = props;
+  static defaultProps = {
+    isAuthenticated: false
+  };
 
-  const [showChildren, setShowChildren] = React.useState<boolean>(false);
-
-  const makeInitialRequests = React.useCallback(() => {
+  makeInitialRequests = async () => {
     if (window.location?.pathname?.match(/ruas\/[0-9]+\/lish/)) {
       return;
     }
-  }, []);
 
-  const ensureAllTypes = React.useCallback(() => {
-    return;
-  }, []);
+    // const dataFetchingPromises = []
+  };
 
-  React.useEffect(() => {
-    if (isAuthenticated) {
-      setShowChildren(true);
-      makeInitialRequests();
-      ensureAllTypes();
+  componentDidMount() {
+    // 初始化 Session
+    const { initSession } = this.props;
+    initSession();
+
+    // 初始化请求
+
+    if (this.props.isAuthenticated) {
+      this.setState({ showChildren: true });
+
+      this.makeInitialRequests();
     }
-  }, [isAuthenticated, makeInitialRequests]);
+  }
 
-  return (
-    <React.Fragment>{showChildren ? props.children : null}</React.Fragment>
-  );
-};
+  componentDidUpdate(prevProps: CombinedProps) {
+    if (
+      !prevProps.isAuthenticated &&
+      this.props.isAuthenticated &&
+      !this.state.showChildren
+    ) {
+      this.makeInitialRequests();
 
-AuthenticationWrapper.defaultProps = defaultProps;
-AuthenticationWrapper.displayName = 'AuthenticationWrapper';
+      return this.setState({ showChildren: true });
+    }
+  }
+
+  render() {
+    const { children } = this.props;
+    const { showChildren } = this.state;
+
+    return <React.Fragment>{showChildren ? children : null}</React.Fragment>;
+  }
+}
 
 interface StateProps {
   isAuthenticated: boolean;
@@ -57,12 +75,14 @@ const mapStateToProps: MapState<StateProps, {}> = (state) => ({
 interface DispatchProps {
   initSession: () => void;
   requestAccount: () => Promise<Account>;
+  checkAccountSize: () => Promise<null>;
 }
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (
   dispatch: ThunkDispatch<ApplicationState, undefined, Action<any>>
 ) => ({
   initSession: () => dispatch(handleInitTokens()),
+  checkAccountSize: () => dispatch(checkAccountSize()),
   requestAccount: () => dispatch(requestAccount()),
   requestProfile: () => dispatch(requestProfile())
 });

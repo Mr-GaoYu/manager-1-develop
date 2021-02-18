@@ -2,6 +2,8 @@ import { devToolsEnabled } from 'src/dev-tools/load';
 
 const localStorageCache = {};
 
+export type PageSize = number;
+
 export const getStorage = (key: string, fallback?: any) => {
   if (localStorageCache[key]) {
     return localStorageCache[key];
@@ -37,6 +39,7 @@ const TOKEN = 'authentication/token';
 const NONCE = 'authentication/nonce';
 const SCOPES = 'authentication/scopes';
 const EXPIRE = 'authentication/expire';
+const PAGE_SIZE = 'PAGE_SIZE';
 
 export interface DevToolsEnv {
   apiRoot: string;
@@ -51,6 +54,10 @@ interface AuthGetAndSet {
 }
 
 export interface Storage {
+  pageSize: {
+    get: () => PageSize;
+    set: (perPage: PageSize) => void;
+  };
   authentication: {
     token: AuthGetAndSet;
     nonce: AuthGetAndSet;
@@ -64,6 +71,12 @@ export interface Storage {
 }
 
 export const storage: Storage = {
+  pageSize: {
+    get: () => {
+      return parseInt(getStorage(PAGE_SIZE, '25'), 10);
+    },
+    set: (v) => setStorage(PAGE_SIZE, `${v}`)
+  },
   authentication: {
     token: {
       get: () => getStorage(TOKEN),
@@ -91,7 +104,7 @@ export const storage: Storage = {
   }
 };
 
-export const { authentication } = storage;
+export const { authentication, pageSize } = storage;
 
 export const isDevToolsEnvValid = (value: any) => {
   return (

@@ -16,6 +16,8 @@ export interface HasNumericID {
 
 export type Entity = HasStringID | HasNumericID;
 
+export type TypeOfID<T> = T extends HasNumericID ? number : string;
+
 export interface EntityError {
   read?: APIError[];
   create?: APIError[];
@@ -61,3 +63,11 @@ export type ThunkActionCreator<ReturnType, Params = void> = (
 ) => ThunkResult<ReturnType>;
 
 export type ThunkDispatch = _ThunkDispatch<ApplicationState, undefined, Action>;
+
+export interface EntityState<T extends Entity, E = APIError[] | undefined> {
+  results: TypeOfID<T>[];
+  entities: T[];
+  loading: boolean;
+  lastUpdated: number;
+  error?: E;
+}

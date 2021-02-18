@@ -14,3 +14,8 @@ export const DEFAULT_ERROR_MESSAGE = 'An unexpected error occurred.';
 export const API_MAX_PAGE_SIZE =
   Number(process.env.REACT_APP_API_MAX_PAGE_SIZE) || 500;
 export const LARGE_ACCOUNT_THRESHOLD = API_MAX_PAGE_SIZE;
+
+export const INTERVAL = 1000;
+
+export const DISABLE_EVENT_THROTTLE =
+  Boolean(process.env.REACT_APP_DISABLE_EVENT_THROTTLE) || false;
