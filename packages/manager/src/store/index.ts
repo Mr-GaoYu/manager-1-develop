@@ -24,6 +24,10 @@ import accountSettings, {
   defaultState as defaultAccountSettingsState,
   State as AccountSettingsState
 } from 'src/store/accountSettings/accountSettings.reducer';
+import preferences, {
+  defaultState as preferencesState,
+  State as PreferencesState
+} from './preferences/preferences.reducer';
 // import { getFirebase } from 'react-redux-firebase';
 
 const __resourcesDefaultState = {
@@ -43,12 +47,14 @@ export interface ApplicationState {
   __resources: ResourcesState;
   authentication: AuthenticationState;
   initialLoad: InitialLoadState;
+  preferences: PreferencesState;
 }
 
 export const defaultState: ApplicationState = {
   __resources: __resourcesDefaultState,
   authentication: authenticationDefaultState,
-  initialLoad: initialLoadState
+  initialLoad: initialLoadState,
+  preferences: preferencesState
 };
 
 /**
@@ -65,7 +71,8 @@ const __resources = combineReducers({
 const reducers = combineReducers<ApplicationState>({
   __resources,
   authentication,
-  initialLoad
+  initialLoad,
+  preferences
 });
 
 const enhancers = compose(applyMiddleware(thunk));

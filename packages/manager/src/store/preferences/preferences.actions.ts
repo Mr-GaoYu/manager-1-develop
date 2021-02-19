@@ -1,10 +1,31 @@
 import { APIError } from '@rua/api-v1/lib/types';
 import { actionCreatorFactory } from 'typescript-fsa';
-// import { SpacingChoice, ThemeChoice } from 'src/ThemeWrapper'
+import { SpacingChoice, ThemeChoice } from 'src/ThemeWrapper';
+import { Order } from 'src/components/Pagey';
 
 const actionCreator = actionCreatorFactory(`@@manager/Preferences`);
 
-export interface UserPreferences {}
+export interface OrderSet {
+  order: Order;
+  orderBy: string;
+}
+
+export interface UserPreferences {
+  longviewTimeRange?: string;
+  gst_banner_dismissed?: boolean;
+  linodes_group_by_tag?: boolean;
+  domains_group_by_tag?: boolean;
+  volumes_group_by_tag?: boolean;
+  nodebalancers_group_by_tag?: boolean;
+  linodes_view_style?: 'grid' | 'list';
+  theme?: ThemeChoice;
+  spacing?: SpacingChoice;
+  desktop_sidebar_open?: boolean;
+  sortKeys?: Partial<Record<string, OrderSet>>;
+  main_content_banner_dismissal?: Record<string, boolean>;
+  linode_news_banner_dismissed?: boolean;
+  notification_drawer_view?: 'list' | 'grouped';
+}
 
 export const handleGetPreferences = actionCreator.async<
   void,
