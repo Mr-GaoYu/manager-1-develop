@@ -431,6 +431,23 @@ module.exports = function (webpackEnv) {
                 compact: isEnvProduction
               }
             },
+            {
+              test: /\.svg$/,
+              exclude: [/font-logos.svg$/],
+              use: {
+                loader: '@svgr/webpack',
+                options: {
+                  svgoConfig: {
+                    plugins: [
+                      // by default prefixes classes with svg path or random string
+                      { prefixIds: { prefixIds: true, prefixClassNames: false } },
+                      // by default removes the viewbox attribute
+                      { removeViewBox: false }
+                    ]
+                  }
+                }
+              }
+            },
             // Process any JS outside of the app with Babel.
             // Unlike the application JS, we only compile the standard ES features.
             {

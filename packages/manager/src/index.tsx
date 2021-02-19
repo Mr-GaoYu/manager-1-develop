@@ -18,6 +18,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { queryClient } from 'src/queries/base';
 import ThemeWrapper from './ThemeWrapper';
 import SnackBar from 'src/components/SnackBar';
+// import SplashScreen from 'src/components/SplashScreen';
 
 const renderNull = () => <span>null route</span>;
 
@@ -27,6 +28,7 @@ const renderLish = () => <div>2</div>;
 
 const renderApp = () => (
   <QueryClientProvider client={queryClient}>
+    {/* <SplashScreen /> */}
     <ThemeWrapper>
       {(toggle, spacing) => (
         <SnackBar
