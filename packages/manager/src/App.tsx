@@ -7,7 +7,10 @@ import { compose } from 'redux';
 import { withSnackbar } from 'notistack';
 import { pathOr } from 'ramda';
 import { APIError } from '@rua/api-v1/lib/types';
-
+import {
+  DocumentTitleSegment,
+  withDocumentTitleProvider
+} from 'src/components/DocumentTitle';
 interface State {
   menuOpen: boolean;
   welcomeBanner: boolean;
@@ -62,7 +65,25 @@ export class App extends React.Component<CombinedProps, State> {
       return 1;
     }
 
-    return <div>2</div>;
+    return (
+      <React.Fragment>
+        <a href="#main-navigation" className="visually-hidden">
+          Skip to main navigation
+        </a>
+        <a href="#main-content" className="visually-hidden">
+          Skip to main content
+        </a>
+        <div hidden>
+          <span id="new-window">Opens in a new window</span>
+          <span id="external-site">Opens an external site</span>
+          <span id="external-site-new-window">
+            Opens an external site in a new window
+          </span>
+        </div>
+
+        <DocumentTitleSegment segment="Linode Manager" />
+      </React.Fragment>
+    );
   }
 }
 
@@ -72,7 +93,7 @@ const mapStateToProps: MapState<StateProps, Props> = (state) => ({});
 
 export const connected = connect(mapStateToProps);
 
-export default compose(connected, withSnackbar)(App);
+export default compose(connected, withDocumentTitleProvider, withSnackbar)(App);
 
 export const hasOauthError = (...args: (Error | APIError[] | undefined)[]) => {
   return args.some((eachError) => {
