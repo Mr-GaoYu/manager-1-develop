@@ -9,7 +9,7 @@ import store from 'src/store';
 import {
   BrowserRouter,
   Route,
-  // RouteComponentProps,
+  RouteComponentProps,
   Switch
 } from 'react-router-dom';
 import AuthenticationWrapper from 'src/components/AuthenticationWrapper';
@@ -26,7 +26,7 @@ const renderNullAuth = () => <span>null auth route</span>;
 
 const renderLish = () => <div>2</div>;
 
-const renderApp = () => (
+const renderApp = (props: RouteComponentProps) => (
   <QueryClientProvider client={queryClient}>
     {/* <SplashScreen /> */}
     <ThemeWrapper>
@@ -36,7 +36,12 @@ const renderApp = () => (
           maxSnack={3}
           autoHideDuration={4000}
           hideIconVariant={true}>
-          <App />
+          <App
+            toggleTheme={toggle}
+            toggleSpacing={spacing}
+            location={props.location}
+            history={props.history}
+          />
         </SnackBar>
       )}
     </ThemeWrapper>
