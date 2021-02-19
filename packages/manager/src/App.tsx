@@ -1,6 +1,12 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import composeState from 'src/utilities/composeState';
+import { connect } from 'react-redux';
+import { MapState } from './store/types';
+import { compose } from 'redux';
+import { withSnackbar } from 'notistack';
+import { pathOr } from 'ramda';
+import { APIError } from '@rua/api-v1/lib/types';
 
 interface State {
   menuOpen: boolean;
@@ -50,14 +56,34 @@ export class App extends React.Component<CombinedProps, State> {
   };
 
   render() {
-    const {hasError} = this.state
+    const { hasError } = this.state;
 
-    if(hasError){
-      return 1
+    if (hasError) {
+      return 1;
     }
 
     return <div>2</div>;
   }
 }
 
-export default App;
+interface StateProps {}
+
+const mapStateToProps: MapState<StateProps, Props> = (state) => ({});
+
+export const connected = connect(mapStateToProps);
+
+export default compose(connected, withSnackbar)(App);
+
+export const hasOauthError = (...args: (Error | APIError[] | undefined)[]) => {
+  return args.some((eachError) => {
+    const cleanedError: string | JSX.Element = pathOr(
+      '',
+      [0, 'reason'],
+      eachError
+    );
+
+    return typeof cleanedError !== 'string'
+      ? false
+      : cleanedError.toLowerCase().includes('oauth');
+  });
+};
