@@ -1,9 +1,18 @@
 import React from 'react';
-import { path } from 'ramda';
+import { path, equals } from 'ramda';
+import { compose } from 'recompose';
 
 import { getStorage } from 'src/utilities/storage';
+import withPreferences, {
+  PreferencesActionsProps
+} from 'src/containers/preferences.container';
 
 type PreferenceValue = boolean | string | number;
+
+export interface ToggleProps<T> {
+  preference: T;
+  togglePreference: () => T;
+}
 
 interface RenderChildrenProps {
   preference: PreferenceValue;
@@ -23,24 +32,28 @@ interface Props<T = PreferenceValue> {
   children: RenderChildren;
 }
 
-type CombinedProps<T = PreferenceValue> = Props<T> & PreferenceProps;
+type CombinedProps<T = PreferenceValue> = Props<T> &
+  PreferenceProps &
+  PreferencesActionsProps;
 
 export const PreferenceToggle: React.FC<CombinedProps> = (props) => {
   const {
     value,
-    children,
+    preferenceError,
+    preferenceKey,
     preferenceOptions,
-    localStorageKey,
-    preferenceKey
-    // preferenceError,
-    // toggleCallbackFnDebounced
+    toggleCallbackFnDebounced,
+    toggleCallbackFn,
+    children,
+    preferences,
+    localStorageKey
   } = props;
 
   const [currentlySetPreference, setPreference] = React.useState<
     PreferenceValue | undefined
   >(value);
 
-  const [lastUpdated] = React.useState<number>(0);
+  const [lastUpdated, setLastUpdated] = React.useState<number>(0);
 
   React.useEffect(() => {
     let preferenceFromLocalStorage = '';
@@ -96,14 +109,46 @@ export const PreferenceToggle: React.FC<CombinedProps> = (props) => {
   React.useEffect(() => {
     if (!isNullOrUndefined(currentlySetPreference)) {
       const debouncedErrorUpdate = setTimeout(() => {
-        // if (!!preferenceError && lastUpdated !== 0) {
-        //   if (
-        //     toggleCallbackFnDebounced &&
-        //     !isNullOrUndefined(currentlySetPreference)
-        //   ) {
-        //     toggleCallbackFnDebounced(currentlySetPreference);
-        //   }
-        // }
+        if (!!preferenceError && lastUpdated !== 0) {
+          if (
+            toggleCallbackFnDebounced &&
+            !isNullOrUndefined(currentlySetPreference)
+          ) {
+            toggleCallbackFnDebounced(currentlySetPreference);
+          }
+
+          props
+            .getUserPreferences()
+            .then((response) => {
+              props
+                .updateUserPreferences({
+                  ...response,
+                  [preferenceKey]: currentlySetPreference
+                })
+                .catch(() => /** swallow the error */ null);
+            })
+            .catch(() => /** swallow the error */ null);
+        } else if (
+          !!preferences &&
+          !isNullOrUndefined(currentlySetPreference) &&
+          lastUpdated !== 0
+        ) {
+          props
+            .updateUserPreferences({
+              ...props.preferences,
+              [preferenceKey]: currentlySetPreference
+            })
+            .catch(() => /** swallow the error */ null);
+
+          if (
+            toggleCallbackFnDebounced &&
+            !isNullOrUndefined(currentlySetPreference)
+          ) {
+            toggleCallbackFnDebounced(currentlySetPreference);
+          }
+        } else if (lastUpdated === 0) {
+          setLastUpdated(Date.now());
+        }
       }, 500);
 
       return () => clearTimeout(debouncedErrorUpdate);
@@ -119,6 +164,10 @@ export const PreferenceToggle: React.FC<CombinedProps> = (props) => {
         : preferenceOptions[0];
 
     setPreference(newPreferenceToSet);
+
+    if (toggleCallbackFn) {
+      toggleCallbackFn(newPreferenceToSet);
+    }
 
     return newPreferenceToSet;
   };
@@ -136,13 +185,55 @@ const isNullOrUndefined = (value: any): value is null | undefined => {
   return typeof value === 'undefined' || value === null;
 };
 
-export interface ToggleProps<T> {
-  preference: T;
-  togglePreference: () => T;
-}
+const wasUndefinedNowDefined = (prevProp: any, nextProp: any) => {
+  return !prevProp && !!nextProp;
+};
+
+const wasDefinedNowUndefined = (prevProp: any, nextProp: any) => {
+  return !!prevProp && !nextProp;
+};
+
+const isUpdatingForTheFirstTime = (
+  prevLastUpdated: number,
+  nextLastUpdated: number
+) => {
+  return prevLastUpdated === 0 && nextLastUpdated !== 0;
+};
 
 interface PreferenceProps {
   preferences?: Record<string, any>;
   preferenceError?: any;
   preferencesLastUpdated: number;
 }
+
+const memoized = (component: React.FC<CombinedProps>) =>
+  React.memo(component, (prevProps, nextProps) => {
+    const shouldRerender =
+      !equals(prevProps.preferences, nextProps.preferences) ||
+      wasUndefinedNowDefined(
+        prevProps.preferenceError,
+        nextProps.preferenceError
+      ) ||
+      wasDefinedNowUndefined(
+        prevProps.preferenceError,
+        nextProps.preferenceError
+      ) ||
+      !equals(prevProps.children, nextProps.children) ||
+      isUpdatingForTheFirstTime(
+        prevProps.preferencesLastUpdated,
+        nextProps.preferencesLastUpdated
+      );
+
+    return !shouldRerender;
+  });
+
+export default (compose<CombinedProps, Props>(
+  withPreferences<PreferenceProps, Props>(
+    (ownProps, { data: preferences, error, lastUpdated }) => ({
+      preferences,
+      preferenceError: error,
+      preferencesLastUpdated: lastUpdated
+    })
+  ),
+  memoized
+)(PreferenceToggle) as unknown) as <T>(props: Props<T>) => React.ReactElement;
