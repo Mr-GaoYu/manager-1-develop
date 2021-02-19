@@ -11,7 +11,7 @@
     "strict": true,
     "baseUrl": ".",
     "noUnusedLocals": true,
-    "strictNullChecks":true
+    "strictNullChecks": true
   },
   "include": ["src"],
   "exclude": ["node_modules/**/*", "**/__tests__/*"]
