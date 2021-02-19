@@ -74,10 +74,36 @@ export interface ThemeOverrides {
   spacingOverride: typeof COMPACT_SPACING_UNIT | typeof NORMAL_SPACING_UNIT;
 }
 
+const primaryColors = {
+  main: '#3683dc',
+  light: '#4d99f1',
+  dark: '#2466b3',
+  text: '#606469',
+  headline: '#32363c',
+  divider: '#f4f4f4',
+  offBlack: '#444',
+  white: '#fff'
+};
+
 type ThemeDefaults = (options: ThemeOverrides) => ThemeOptions;
 
 const themeDefaults: ThemeDefaults = ({ spacingOverride: spacingUnit }) => {
-  return {};
+  return {
+    bg: {
+      white: '#fff'
+    },
+    palette: {
+      primary: primaryColors,
+      status: {
+        success: '#d7e3ef',
+        successDark: '#3682dd',
+        warning: '#fdf4da',
+        warningDark: '#ffd002',
+        error: '#f8dedf',
+        errorDark: '#cd2227'
+      }
+    }
+  };
 };
 
 export default (options: ThemeOptions & ThemeOverrides) =>

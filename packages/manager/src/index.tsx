@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import App from 'src/App';
+import App from 'src/App';
 import loadDevTools from 'src/dev-tools/load';
 import 'src/index.css';
 import { isProductionBuild } from 'src/website/constants';
@@ -16,6 +16,8 @@ import AuthenticationWrapper from 'src/components/AuthenticationWrapper';
 import { QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { queryClient } from 'src/queries/base';
+import ThemeWrapper from './ThemeWrapper';
+import SnackBar from 'src/components/SnackBar';
 
 const renderNull = () => <span>null route</span>;
 
@@ -25,6 +27,17 @@ const renderLish = () => <div>2</div>;
 
 const renderApp = () => (
   <QueryClientProvider client={queryClient}>
+    <ThemeWrapper>
+      {(toggle, spacing) => (
+        <SnackBar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          maxSnack={3}
+          autoHideDuration={4000}
+          hideIconVariant={true}>
+          <App />
+        </SnackBar>
+      )}
+    </ThemeWrapper>
     <ReactQueryDevtools
       initialIsOpen={false}
       toggleButtonProps={{ style: { marginLeft: '3em' } }}
