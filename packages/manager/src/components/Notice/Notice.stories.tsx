@@ -13,7 +13,9 @@ const Template: Story<{}> = (args: any) => (
   <React.Fragment>
     <Provider store={store}>
       <div style={{ padding: 8, backgroundColor: '#f4f4f4' }}>
-        <Notice />
+        <Notice error />
+        <Notice success />
+        <Notice warning />
       </div>
     </Provider>
   </React.Fragment>
