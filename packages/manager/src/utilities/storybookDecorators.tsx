@@ -3,6 +3,8 @@ import { ThemeProvider } from 'src/components/core/styles';
 import { dark, light } from 'src/themes';
 import { StoryContext, StoryGetter } from '@storybook/addons';
 import CssBaseline from 'src/components/core/CssBaseline';
+import 'src/index.css';
+import 'src/storybook.css';
 
 const options = {
   dark,
