@@ -74,7 +74,8 @@ const Notice: React.FC<CombinedProps> = (props) => {
       item
       className={classNames({
         [classes.root]: true
-      })}>
+      })}
+      role="alert">
       {(success && <Check className={classes.icon} data-qa-success-img />) ||
         (warning && <Warning className={classes.icon} data-qa-warning-img />) ||
         (error && <Error className={classes.icon} data-qa-error-img />)}
