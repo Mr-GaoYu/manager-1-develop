@@ -1,4 +1,4 @@
-import Grid, { GridProps as _GridProps } from '@material-ui/core/Grid';
+import Grid, { Props as _GridProps } from './Grid';
 
 export interface GridProps extends _GridProps {}
 
