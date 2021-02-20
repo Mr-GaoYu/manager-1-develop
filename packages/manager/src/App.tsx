@@ -15,6 +15,7 @@ interface State {
   menuOpen: boolean;
   welcomeBanner: boolean;
   hasError: boolean;
+
   goToOpen: boolean;
 }
 interface Props {
