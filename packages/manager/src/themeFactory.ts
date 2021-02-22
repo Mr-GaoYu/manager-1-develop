@@ -85,6 +85,20 @@ const primaryColors = {
   white: '#fff'
 };
 
+const cmrBGColors = {
+  bgApp: '#f4f5f6',
+  bgPrimaryNav: '#3a3f46',
+  bgPrimaryNavActive: '#515861',
+  bgPaper: '#ffffff',
+  bgPrimaryButton: '#3683dc',
+  // notification center, add a tag, breadcrumb
+  bgSecondaryButton: '#e5f1ff',
+  bgTableHeader: '#f9fafa',
+  bgBillingSummary: '#f5f9ff',
+  bgAccessRow: '#fafafa',
+  bgAccessRowTransparentGradient: 'rgb(255, 255, 255, .001)'
+};
+
 type ThemeDefaults = (options: ThemeOverrides) => ThemeOptions;
 
 const themeDefaults: ThemeDefaults = ({ spacingOverride: spacingUnit }) => {
@@ -101,8 +115,12 @@ const themeDefaults: ThemeDefaults = ({ spacingOverride: spacingUnit }) => {
         warningDark: '#ffd002',
         error: '#f8dedf',
         errorDark: '#cd2227'
+      },
+      text: {
+        primary: primaryColors.text
       }
-    }
+    },
+    cmrBGColors
   };
 };
 

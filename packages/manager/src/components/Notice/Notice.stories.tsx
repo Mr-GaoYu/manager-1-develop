@@ -13,9 +13,23 @@ const Template: Story<{}> = (args: any) => (
   <React.Fragment>
     <Provider store={store}>
       <div style={{ padding: 8, backgroundColor: '#f4f4f4' }}>
-        <Notice error />
-        <Notice success />
-        <Notice warning />
+        <Notice error text="This is an error notice" />
+        <Notice success text="This is an important success notice" />
+        <Notice warning text="This is an important warning notice" />
+        <Notice error important text="This is an important error notice" />
+        <Notice warning important text="This is an important warning notice" />
+        <Notice success important text="This is an important success notice" />
+        <Notice
+          error
+          notificationList
+          text="This is an error notificationList notice"
+        />
+        <Notice
+          warning
+          text="This is a dismissible Notice"
+          dismissible
+          onClose={() => null}
+        />
       </div>
     </Provider>
   </React.Fragment>
