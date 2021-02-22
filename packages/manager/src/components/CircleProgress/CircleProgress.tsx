@@ -10,7 +10,16 @@ import {
   WithStyles
 } from 'src/components/core/styles';
 
-type ClassNames = 'root' | 'mini' | 'noPadding' | 'tag' | 'sort';
+type ClassNames =
+  | 'root'
+  | 'mini'
+  | 'noPadding'
+  | 'tag'
+  | 'sort'
+  | 'green'
+  | 'progress'
+  | 'hasValueInside'
+  | 'noTopMargin';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -28,13 +37,22 @@ const styles = (theme: Theme) =>
     noPadding: {
       padding: 0
     },
+    noTopMargin: {
+      [theme.breakpoints.up('md')]: {
+        top: 0,
+        height: 'auto'
+      }
+    },
     tag: {
       width: '12px !important',
       height: '12px !important',
       padding: 0,
       marginLeft: 4,
       marginRight: 4
-    }
+    },
+    green: {},
+    progress: {},
+    hasValueInside: {}
   });
 
 interface Props extends CircularProgressProps {
@@ -58,7 +76,18 @@ class CircleProgressComponent extends React.Component<CombinedProps> {
 
     const value = typeof this.props.value === 'number' ? this.props.value : 0;
 
-    const { mini, noPadding, classes, tag, sort, ...rest } = this.props;
+    const {
+      mini,
+      noPadding,
+      classes,
+      tag,
+      sort,
+      noTopMargin,
+      className,
+      green,
+      children,
+      ...rest
+    } = this.props;
 
     return mini ? (
       <CircularProgress
@@ -75,8 +104,28 @@ class CircleProgressComponent extends React.Component<CombinedProps> {
         tabIndex={0}
       />
     ) : (
-      <div aria-label="Content is loading">
-        <CircularProgress {...rest} value={value} variant={variant} />
+      <div
+        className={classNames(
+          {
+            [classes.root]: true,
+            [classes.noTopMargin]: noTopMargin,
+            [classes.noPadding]: noPadding,
+            [classes.green]: green,
+            [classes.hasValueInside]: children !== undefined
+          },
+          className
+        )}
+        aria-label="Content is loading">
+        <CircularProgress
+          {...rest}
+          className={classes.progress}
+          size={green ? 128 : 124}
+          value={value}
+          variant={variant}
+          thickness={green ? 4 : 2}
+          data-qa-circle-progress={value}
+          data-testid="circle-progress"
+        />
       </div>
     );
   }
