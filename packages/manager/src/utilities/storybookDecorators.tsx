@@ -12,7 +12,7 @@ const options = {
 };
 
 const withThemeProvider = (Story: StoryGetter, context: StoryContext) => {
-  const key = context.globals.theme;
+  const key = context.globals.theme || 'light';
 
   return (
     <ThemeProvider theme={options[key](8)}>

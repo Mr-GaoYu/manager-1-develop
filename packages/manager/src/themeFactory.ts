@@ -120,6 +120,9 @@ const themeDefaults: ThemeDefaults = ({ spacingOverride: spacingUnit }) => {
         primary: primaryColors.text
       }
     },
+    color: {
+      green: '#00b159'
+    },
     cmrBGColors
   };
 };

@@ -11,6 +11,8 @@ export const Indefinite = () => <CircleProgress noTopMargin />;
 
 export const Mini = () => <CircleProgress mini />;
 
+export const Green = () => <CircleProgress green />;
+
 export const Tag = () => <CircleProgress tag mini />;
 
 export const DataInside = () => (

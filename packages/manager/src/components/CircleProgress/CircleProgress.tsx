@@ -16,8 +16,11 @@ type ClassNames =
   | 'noPadding'
   | 'tag'
   | 'sort'
+  | 'top'
   | 'green'
   | 'progress'
+  | 'topWrapper'
+  | 'valueInside'
   | 'hasValueInside'
   | 'noTopMargin';
 
@@ -29,7 +32,28 @@ const styles = (theme: Theme) =>
       justifyContent: 'center',
       position: 'relative',
       width: '100%',
-      margin: '0 auto 20px'
+      margin: '0 auto 20px',
+      [theme.breakpoints.up('md')]: {
+        flex: 1,
+        height: 300
+      }
+    },
+    progress: {
+      position: 'relative',
+      [theme.breakpoints.down('xs')]: {
+        width: '72px !important',
+        height: '72px !important'
+      }
+    },
+    top: {
+      width: 70,
+      height: 70,
+      borderRadius: '50%',
+      border: '1px solid #999',
+      [theme.breakpoints.up('sm')]: {
+        width: 120,
+        height: 120
+      }
     },
     mini: {
       padding: theme.spacing(1) * 1.3
@@ -50,8 +74,32 @@ const styles = (theme: Theme) =>
       marginLeft: 4,
       marginRight: 4
     },
-    green: {},
-    progress: {},
+    sort: {
+      width: '14px !important',
+      height: '14px !important',
+      padding: 0,
+      position: 'relative',
+      top: 4,
+      marginLeft: 8,
+      marginRight: 4
+    },
+    green: {
+      '& circle': {
+        stroke: theme.color.green
+      },
+      '& $progress': {
+        width: '93px !important',
+        height: '93px !important'
+      },
+      '& $top': {
+        width: 85,
+        height: 85
+      }
+    },
+    valueInside: {
+      position: 'absolute',
+      marginTop: 4
+    },
     hasValueInside: {}
   });
 
@@ -85,6 +133,7 @@ class CircleProgressComponent extends React.Component<CombinedProps> {
       noTopMargin,
       className,
       green,
+      noInner,
       children,
       ...rest
     } = this.props;
@@ -116,6 +165,16 @@ class CircleProgressComponent extends React.Component<CombinedProps> {
           className
         )}
         aria-label="Content is loading">
+        {children !== undefined && (
+          <div className={classes.valueInside}>{children}</div>
+        )}
+
+        {noInner !== true && (
+          <div className={classes.topWrapper}>
+            <div className={classes.top} />
+          </div>
+        )}
+
         <CircularProgress
           {...rest}
           className={classes.progress}
